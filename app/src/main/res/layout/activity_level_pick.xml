@@ -9,11 +9,12 @@
 
     <Button
         android:id="@+id/go_back_btn"
-        android:layout_width="75dp"
-        android:layout_height="70dp"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/go_back_img"
+        android:onClick="goMain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +24,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Выбор уровня"
-        android:textSize="30dp"
+        android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +54,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl1"
+                android:onClick="goLvl"
                 android:text="1"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -63,10 +64,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl2"
+                android:onClick="goLvl"
                 android:text="2"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -77,7 +76,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl3"
+                android:onClick="goLvl"
                 android:text="3"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -95,7 +94,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl4"
+                android:onClick="goLvl"
                 android:text="4"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -105,10 +104,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl5"
+                android:onClick="goLvl"
                 android:text="5"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -119,7 +116,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl6"
+                android:onClick="goLvl"
                 android:text="6"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -137,7 +134,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl7"
+                android:onClick="goLvl"
                 android:text="7"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -147,10 +144,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl8"
+                android:onClick="goLvl"
                 android:text="8"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -161,7 +156,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl9"
+                android:onClick="goLvl"
                 android:text="9"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -179,7 +174,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl10"
+                android:onClick="goLvl"
                 android:text="10"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -189,10 +184,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl11"
+                android:onClick="goLvl"
                 android:text="11"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -203,7 +196,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_border"
-                android:onClick="goLvl12"
+                android:onClick="goLvl"
                 android:text="12"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
