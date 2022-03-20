@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="#4C351C"
-    tools:context=".LevelInfoActivity">
+    android:orientation="horizontal"
+    tools:context=".MapActivity"
+    android:background="#4C351C">
     <Button
         android:id="@+id/go_back_btn"
         android:layout_width="55dp"
@@ -16,7 +17,6 @@
         android:onClick="goBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textViewLvl"
         android:layout_width="wrap_content"
@@ -27,31 +27,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+        <HorizontalScrollView
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="600dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
     <ImageView
         android:transitionName="map_img"
         android:id="@+id/map_img"
-        android:layout_width="360dp"
-        android:layout_height="270dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="30dp"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="600dp"
+        android:layout_height="600dp"
+        android:scaleType="fitStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="208dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/start_button"
-        android:onClick="startLvl"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
