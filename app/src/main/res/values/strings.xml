@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Perekrestki</string>
     <string name="number_string">Number</string>
+    <string name="pdd1"></string>
 </resources>

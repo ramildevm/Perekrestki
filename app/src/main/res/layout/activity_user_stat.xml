@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4C351C"
+    tools:context=".UserStatActivity">
+    <Button
+        android:id="@+id/go_back_btn"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/go_back_img"
+        android:onClick="goBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewLvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="Ваша статистика"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lvlcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="Пройдено уровней:"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lvlcountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:textColor="#FDB912"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/lvlcount"
+        app:layout_constraintTop_toTopOf="@id/lvlcount" />
+    <TextView
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="Проресс:"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lvlcount" />
+
+    <TextView
+        android:id="@+id/progressBar1"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/white"
+        android:fontFamily="@font/arima_madurai"
+        android:textColor="#FDB912"
+        android:textSize="26dp"
+        app:layout_constraintStart_toEndOf="@+id/progress"
+        app:layout_constraintTop_toBottomOf="@id/lvlcount" />
+
+    <TextView
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:background="#FDB912"
+        android:fontFamily="@font/arima_madurai"
+        android:textSize="26dp"
+        app:layout_constraintStart_toEndOf="@+id/progress"
+        app:layout_constraintTop_toBottomOf="@id/lvlcount" />
+
+
+    <TextView
+        android:id="@+id/fails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="Ошибок:"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="0"
+        android:textColor="#FDB912"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/fails"
+        app:layout_constraintTop_toBottomOf="@id/progress" />
+    <TextView
+        android:id="@+id/hardlvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="Самый сложный уровень:"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fails" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="0"
+        android:textColor="#FDB912"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/hardlvl"
+        app:layout_constraintTop_toBottomOf="@id/fails" />
+    <TextView
+        android:id="@+id/hardlvlfails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="И количество ошибок:"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hardlvl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/arima_madurai"
+        android:text="0"
+        android:textColor="#FDB912"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/hardlvlfails"
+        app:layout_constraintTop_toBottomOf="@id/hardlvl" />
+
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="208dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/reset_stat"
+        android:onClick="resetStat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

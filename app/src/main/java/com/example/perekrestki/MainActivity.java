@@ -17,4 +17,12 @@ public class MainActivity extends AppCompatActivity {
     public void goLvlPick(View view) {
         startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
     }
+
+    public void goPddPage(View view) {
+        startActivity(new Intent(MainActivity.this,PddPageActivity.class));
+    }
+
+    public void goStatPage(View view) {
+        startActivity(new Intent(MainActivity.this,UserStatActivity.class));
+    }
 }
