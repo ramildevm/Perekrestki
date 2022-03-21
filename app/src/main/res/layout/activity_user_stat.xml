@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4C351C"
+    android:background="#513215"
     tools:context=".UserStatActivity">
+
     <Button
         android:id="@+id/go_back_btn"
         android:layout_width="55dp"
@@ -33,8 +34,8 @@
         android:id="@+id/lvlcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="150dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Пройдено уровней:"
         android:textSize="24dp"
@@ -45,19 +46,20 @@
         android:id="@+id/lvlcountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp"
         android:fontFamily="@font/arima_madurai"
         android:textColor="#FDB912"
         android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/lvlcount"
         app:layout_constraintTop_toTopOf="@id/lvlcount" />
+
     <TextView
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Проресс:"
         android:textSize="24dp"
@@ -65,11 +67,11 @@
         app:layout_constraintTop_toBottomOf="@id/lvlcount" />
 
     <TextView
-        android:id="@+id/progressBar1"
+        android:id="@+id/progressBarBack"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
         android:background="@color/white"
         android:fontFamily="@font/arima_madurai"
         android:textColor="#FDB912"
@@ -81,21 +83,19 @@
         android:id="@+id/progressBar"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
         android:background="#FDB912"
         android:fontFamily="@font/arima_madurai"
         android:textSize="26dp"
-        app:layout_constraintStart_toEndOf="@+id/progress"
-        app:layout_constraintTop_toBottomOf="@id/lvlcount" />
+        app:layout_constraintStart_toStartOf="@+id/progressBarBack"
+        app:layout_constraintTop_toTopOf="@+id/progressBarBack" />
 
 
     <TextView
         android:id="@+id/fails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Ошибок:"
         android:textSize="24dp"
@@ -103,6 +103,7 @@
         app:layout_constraintTop_toBottomOf="@id/progress" />
 
     <TextView
+        android:id="@+id/failsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -113,12 +114,13 @@
         android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/fails"
         app:layout_constraintTop_toBottomOf="@id/progress" />
+
     <TextView
         android:id="@+id/hardlvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Самый сложный уровень:"
         android:textSize="24dp"
@@ -126,23 +128,25 @@
         app:layout_constraintTop_toBottomOf="@id/fails" />
 
     <TextView
+        android:id="@+id/hardlvlText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="10dp"
         android:fontFamily="@font/arima_madurai"
         android:text="0"
         android:textColor="#FDB912"
         android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/hardlvl"
         app:layout_constraintTop_toBottomOf="@id/fails" />
+
     <TextView
         android:id="@+id/hardlvlfails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/arima_madurai"
         android:text="И количество ошибок:"
         android:textSize="24dp"
@@ -150,11 +154,12 @@
         app:layout_constraintTop_toBottomOf="@id/hardlvl" />
 
     <TextView
+        android:id="@+id/hardlvlfailsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="20dp"
         android:fontFamily="@font/arima_madurai"
         android:text="0"
         android:textColor="#FDB912"
@@ -174,5 +179,5 @@
         android:onClick="resetStat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

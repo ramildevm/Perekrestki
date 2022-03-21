@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".MapActivity"
-    android:background="#4C351C">
+    android:background="#513215">
     <Button
         android:id="@+id/go_back_btn"
         android:layout_width="55dp"

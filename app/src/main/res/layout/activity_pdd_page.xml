@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4C351C"
+    android:background="#513215"
     tools:context=".PddPageActivity">
         <Button
             android:id="@+id/go_back_btn"
@@ -30,8 +30,8 @@
 
         <WebView
             android:id="@+id/webView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="70dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
