@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LevelInfoActivity extends AppCompatActivity {
-private String LevelNum;
+    private String LevelNum;
     int imgId;
     DBHelper db;
     @Override
@@ -23,6 +23,7 @@ private String LevelNum;
         LevelNum = getIntent().getStringExtra("Number");
         if(!LevelNum.isEmpty())
             setData(Integer.parseInt(LevelNum));
+
         ImageView img = findViewById(R.id.map_img);
         switch (LevelNum){
             case "1":
@@ -77,6 +78,7 @@ private String LevelNum;
             findViewById(R.id.difficult).setVisibility(View.INVISIBLE);
             findViewById(R.id.fails).setVisibility(View.INVISIBLE);
             findViewById(R.id.scenesNum).setVisibility(View.INVISIBLE);
+            findViewById(R.id.status).setVisibility(View.INVISIBLE);
         }
         findViewById(R.id.map_img).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +98,16 @@ private String LevelNum;
             ((TextView)findViewById(R.id.scenesNumText)).setText(""+level.getInt(2));
             ((TextView)findViewById(R.id.failsText)).setText(""+level.getInt(1));
         }
+        Cursor res = db.getuserstat();
+        res.moveToNext();
+        if(res.getInt(1)>=levelNum){
+            ((TextView)findViewById(R.id.statusText)).setText("Пройдено");
+            ((TextView)findViewById(R.id.statusText)).setTextColor(0xff000000);
+        }
+        else{
+            ((TextView)findViewById(R.id.statusText)).setText("Не пройдено");
+            ((TextView)findViewById(R.id.statusText)).setTextColor(0xff888888);
+        }
     }
 
     public void goBack(View view) {
@@ -103,5 +115,6 @@ private String LevelNum;
     }
 
     public void startLvl(View view) {
+        startActivity(new Intent(this,LevelActivity.class).putExtra("Number",Integer.parseInt(LevelNum)));
     }
 }

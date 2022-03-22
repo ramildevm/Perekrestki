@@ -1,7 +1,10 @@
 package com.example.perekrestki;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +47,7 @@ public class UserStatActivity extends AppCompatActivity {
     }
     public void goBack(View view) { onBackPressed();
     }
-
     public void resetStat(View view) {
+        db.updateuserstat(1,0,0,0);
     }
 }
