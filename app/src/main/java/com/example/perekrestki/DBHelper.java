@@ -103,6 +103,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select * from Levels where num=?",new String[]{""+id});
         return cursor;
     }
+
+    public Cursor getmaxlevel() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from Levels order by fails desc",null);
+        return cursor;
+    }
     //*********************************************************************************************
     //Scenes Context
     public Boolean insertscene(int id,int layout, int transition,int correctMS,int secondMS,
@@ -158,12 +164,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getlevelscene(int lvlid){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from LevelScene where idlvl=? order by priority",new String[]{""+lvlid});
-        return cursor;
-    }
-
-    public Cursor getmaxlevel() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from LevelScene order by priority desc",null);
         return cursor;
     }
 }

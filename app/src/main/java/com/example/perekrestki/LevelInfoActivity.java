@@ -11,10 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LevelInfoActivity extends AppCompatActivity {
     private String LevelNum;
-    private Boolean isAvaible;
+    private Boolean isAvaible=false;
     int imgId;
     DBHelper db;
     @Override
@@ -116,10 +117,14 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        NavUtils.navigateUpFromSameTask(this);
+        startActivity(new Intent(this,LevelPickActivity.class));
     }
 
     public void startLvl(View view) {
+        if (Integer.parseInt(LevelNum) > 2){
+            Toast.makeText(this, "Пока что в разработке!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         startActivity(new Intent(this,LevelActivity.class).putExtra("Number",Integer.parseInt(LevelNum)));
     }
 }

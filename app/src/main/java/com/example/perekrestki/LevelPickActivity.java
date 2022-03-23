@@ -1,6 +1,7 @@
 package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
@@ -13,11 +14,11 @@ import android.widget.LinearLayout;
 
 public class LevelPickActivity extends AppCompatActivity {
     DBHelper db;
-    Boolean isAvaible = false;
     private int comppletedLvlCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_pick);
         db = new DBHelper(this);
@@ -46,12 +47,15 @@ public class LevelPickActivity extends AppCompatActivity {
     }
 
     public void goLvl(View view) {
+        boolean isAvaible = false;
         String num = ((Button)view).getText().toString();
-        int lvl = Integer.parseInt(num);
-        if(lvl-1==comppletedLvlCount | lvl==0)
-            isAvaible = true;
-        else if(lvl<=comppletedLvlCount)
-            isAvaible = true;
+        if(!num.isEmpty()){
+            int lvl = Integer.parseInt(num);
+            if(lvl-1==comppletedLvlCount)
+                isAvaible = true;
+            else if(lvl<=comppletedLvlCount & lvl!=0)
+                isAvaible = true;
+        }
         startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class).putExtra("Number",num).putExtra("isAvaible",isAvaible));
     }
 }

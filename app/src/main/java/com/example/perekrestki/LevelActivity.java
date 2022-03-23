@@ -1,11 +1,13 @@
 package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,15 +87,8 @@ public class LevelActivity extends AppCompatActivity {
 
     private void correctBtnPressed() {
         if(curSceneNum==scenesCount){
-            Cursor res = db.getuserstat();
-            res.moveToFirst();
-            Cursor levels = db.getmaxlevel();
-            levels.moveToFirst();
-            if(fails >= levels.getInt(1))
-                db.updateuserstat(1,lvlNum,res.getInt(2)+fails,lvlNum);
-            else
-                db.updateuserstat(1,lvlNum,res.getInt(2)+fails,res.getInt(3));
-            onBackPressed();
+            startActivity(new Intent(this,LevelInfoActivity.class));
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         }
         else{
             curSceneNum++;
@@ -111,7 +106,9 @@ public class LevelActivity extends AppCompatActivity {
         if(button.getText() == currentScene.correct){
             //ml.loadLayoutDescription(currentScene.correctMS);
             checkCorrect = true;
-            Toast.makeText(this,"Верно!",Toast.LENGTH_SHORT).show();
+            Toast msg = Toast.makeText(this,"Верно!",Toast.LENGTH_SHORT);
+            msg.setGravity(Gravity.CENTER,0,-130);
+            msg.show();
             ml.setTransition(R.id.tran0);
             ml.transitionToEnd();
             changeButtonToNext();
@@ -120,18 +117,22 @@ public class LevelActivity extends AppCompatActivity {
             //ml.loadLayoutDescription(currentScene.secondMS);
             //ml.setTransition(currentScene.transition);
             fails++;
-            Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT).show();
+            Toast msg = Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT);
+            msg.setGravity(Gravity.CENTER,0,-130);
+            msg.show();
         }
         else if (button.getText() == currentScene.third){
             //ml.loadLayoutDescription(currentScene.thirdMS);
             //ml.setTransition(currentScene.transition);
             fails++;
-            Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT).show();
+            Toast msg = Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT);
+            msg.setGravity(Gravity.CENTER,0,-130);
+            msg.show();
         }
         Cursor res = db.getuserstat();
         res.moveToFirst();
         db.updatelevel(lvlNum,fails);
-        db.updateuserstat(1,lvlNum,res.getInt(2)+fails,res.getInt(3));
+        db.updateuserstat(1,lvlNum,res.getInt(2)+1,res.getInt(3));
     }
 
     private void changeButtonToNext() {
