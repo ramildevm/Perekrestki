@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/leftcar" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/center0" >
+        <Constraint
+            android:layout_height="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="180"
+            app:layout_editor_absoluteY="141dp"
+            app:layout_constraintHorizontal_bias="0.637" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/center" >
+        <Constraint
+            android:layout_height="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="180"
+            app:layout_editor_absoluteY="141dp"
+            app:layout_constraintHorizontal_bias="0.637" />
+        <Constraint
+            android:id="@+id/leftcar"
+            android:layout_width="90dp"
+            android:layout_height="54dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.598"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="parent" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/center2" >
+        <Constraint
+            app:layout_constraintVertical_bias="0.428"
+            android:layout_height="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="90"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:translationX="-25dp"
+            android:translationY="25dp" />
+        <Constraint
+            app:layout_constraintVertical_bias="0.598"
+            android:layout_height="54dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/leftcar"
+            app:layout_constraintStart_toEndOf="parent" />
+    </ConstraintSet>
+    <Transition
+        app:constraintSetStart="@+id/center"
+        app:constraintSetEnd="@+id/center2"
+        app:duration="1600"
+        app:autoTransition="animateToEnd" >
+        <KeyFrameSet >
+            <KeyPosition
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="30"
+                app:keyPositionType="deltaRelative"
+                app:percentX="0.7"
+                app:percentY="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="47"
+                android:rotation="90" />
+            <KeyAttribute
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="16"
+                android:rotation="180" />
+            <KeyAttribute
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="29"
+                android:translationX="-25dp" />
+        </KeyFrameSet>
+    </Transition>
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            app:layout_constraintVertical_bias="0.428"
+            android:layout_height="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="90"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:translationX="-25dp"
+            android:translationY="25dp" />
+        <Constraint
+            app:layout_constraintVertical_bias="0.598"
+            android:layout_height="54dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/leftcar"
+            app:layout_constraintStart_toEndOf="parent" />
+        <Constraint
+            android:id="@+id/bottomcar"
+            android:layout_width="90dp"
+            android:layout_height="54dp"
+            android:rotation="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            android:translationY="26dp" />
+    </ConstraintSet>
+    <Transition
+        app:constraintSetStart="@+id/center2"
+        app:constraintSetEnd="@+id/end"
+        app:autoTransition="animateToEnd"
+        app:duration="1600">
+        <KeyFrameSet >
+            <KeyPosition
+                app:motionTarget="@+id/bottomcar"
+                app:framePosition="30"
+                app:keyPositionType="deltaRelative"
+                app:percentX="0"
+                app:percentY=".65" />
+            <KeyAttribute
+                app:motionTarget="@+id/bottomcar"
+                app:framePosition="22"
+                android:rotation="-90" />
+            <KeyAttribute
+                app:motionTarget="@+id/bottomcar"
+                app:framePosition="55"
+                android:rotation="0" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        app:constraintSetStart="@+id/end"
+        app:constraintSetEnd="@+id/start"
+        app:duration="10"
+        app:autoTransition="animateToEnd" />
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@+id/center0"
+        android:id="@+id/tran0"
+        app:duration="1000"/>
+    <Transition
+        app:constraintSetStart="@+id/center0"
+        app:constraintSetEnd="@+id/center"
+        app:duration="1600"
+        app:autoTransition="animateToEnd" />
+</MotionScene>

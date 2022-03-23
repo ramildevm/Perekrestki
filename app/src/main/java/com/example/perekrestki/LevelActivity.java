@@ -3,9 +3,9 @@ package com.example.perekrestki;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.transition.Scene;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +23,10 @@ public class LevelActivity extends AppCompatActivity {
     MotionLayout ml;
     Scenes currentScene;
     int curSceneNum = 1;
-    int lvlCount;
+    int scenesCount;
+    int lvlNum;
     int fails = 0;
     boolean checkCorrect;
-    int lvlNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class LevelActivity extends AppCompatActivity {
 
     private void loadLayoutData() {
         Cursor lvlscene = db.getlevelscene(lvlNum);
-        lvlCount = lvlscene.getCount(); //save levels count
+        scenesCount = lvlscene.getCount(); //save levels count
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
         int checkSceneNum = 1;
         while(lvlscene.moveToNext()) {
@@ -97,7 +97,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     private void correctBtnPressed() {
-        if(curSceneNum==lvlCount){
+        if(curSceneNum==scenesCount){
             Cursor res = db.getuserstat();
             res.moveToFirst();
             Cursor levels = db.getmaxlevel();
@@ -106,6 +106,7 @@ public class LevelActivity extends AppCompatActivity {
                 db.updateuserstat(1,lvlNum,res.getInt(2)+fails,lvlNum);
             else
                 db.updateuserstat(1,lvlNum,res.getInt(2)+fails,res.getInt(3));
+            onBackPressed();
         }
         else{
             curSceneNum++;

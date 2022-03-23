@@ -30,9 +30,11 @@ public class LevelPickActivity extends AppCompatActivity {
             int lvl = Integer.parseInt(b.getText().toString());
             if(lvl-1==res.getInt(1) | lvl==0){
                 b.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_border_light));
+                b.setTag("true");
             }
             else if(lvl<=res.getInt(1)) {
                 b.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_border_complete));
+                b.setTag("false");
             }
             }
         }
@@ -43,6 +45,6 @@ public class LevelPickActivity extends AppCompatActivity {
 
     public void goLvl(View view) {
         String num = ((Button)view).getText().toString();
-        startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class).putExtra("Number",num));
+        startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class).putExtra("Number",num).putExtra("isAvaible",((Button)view).getTag().toString()=="true"?true:false));
     }
 }

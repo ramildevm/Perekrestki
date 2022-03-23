@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class LevelInfoActivity extends AppCompatActivity {
     private String LevelNum;
+    private Boolean isAvaible;
     int imgId;
     DBHelper db;
     @Override
@@ -21,6 +22,7 @@ public class LevelInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level_info);
         db = new DBHelper(this);
         LevelNum = getIntent().getStringExtra("Number");
+        isAvaible = getIntent().getBooleanExtra("isAvaible",false);
         if(!LevelNum.isEmpty())
             setData(Integer.parseInt(LevelNum));
 
@@ -71,6 +73,8 @@ public class LevelInfoActivity extends AppCompatActivity {
         TextView txtLvl = (TextView) findViewById(R.id.textViewLvl);
         if(!LevelNum.isEmpty()) {
             txtLvl.setText("Уровень " + LevelNum);
+            if (isAvaible)
+                findViewById(R.id.start_button).setVisibility(View.INVISIBLE);
         }
         else {
             txtLvl.setText("Карта");

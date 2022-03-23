@@ -35,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
             db.insertlevel(11, 0, 6, "Средне");
             db.insertlevel(12, 0, 6, "Средне");
         }
+        if(db.getscenes().getCount()==0){
+            db.insertscene(1,R.layout.scene13_1,R.id.tran0,R.xml.scene13_1_scene,R.xml.scene13_1_scene,R.xml.scene13_1_scene,"Красный, желтый, зеленый","Красный, зеленый,желтый","Желтый, красный, зеленый",R.id.motion_layout13_1);
+            db.insertscene(2,R.layout.scene14_1,R.id.tran0,R.xml.scene14_1_scene,R.xml.scene14_1_scene,R.xml.scene14_1_scene,"Зеленый, фиолетовый","Зеленый и фиолетовый","Фмолетовый, зеленый",R.id.motion_layout14_1);
+            db.insertscene(3,R.layout.scene7_1,R.id.tran0,R.xml.scene7_1_scene,R.xml.scene7_1_scene,R.xml.scene7_1_scene,"Зеленый, красный","Зеленый и красный","Красный, зеленый",R.id.motion_layout7_1);
+        }
+        if(db.getlevelscenes().getCount() ==0){
+            db.insertlevelscene(1,1,1,1);
+            db.insertlevelscene(1,1,2,2);
+            db.insertlevelscene(1,1,3,3);
+        }
+
     }
     public void goLvlPick(View view) {
         startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
