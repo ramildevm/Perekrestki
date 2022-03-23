@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if(db.getlevelscenes().getCount() ==0){
             db.insertlevelscene(1,1,1,1);
-            db.insertlevelscene(1,1,2,2);
-            db.insertlevelscene(1,1,3,3);
+            db.insertlevelscene(2,1,2,2);
+            db.insertlevelscene(3,1,3,3);
         }
 
     }

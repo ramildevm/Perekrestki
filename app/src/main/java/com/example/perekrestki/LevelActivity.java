@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class LevelActivity extends AppCompatActivity {
     DBHelper db;
     ViewFlipper flipper;
+    Button btn1,btn2,btn3,btnNxt;
     MotionLayout ml;
     Scenes currentScene;
     int curSceneNum = 1;
@@ -33,10 +35,12 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
         db = new DBHelper(this);
         flipper = findViewById(R.id.sceneContainer);
+        TextView lvlText = findViewById(R.id.lvlTxt);
         lvlNum = getIntent().getIntExtra("Number",0);
         Cursor res = db.getlevel(lvlNum);
         res.moveToFirst();
         fails = res.getInt(1);
+        lvlText.setText("Уровень " + lvlNum);
         loadLayoutData();
         loadButtonsData();
     }
@@ -46,10 +50,13 @@ public class LevelActivity extends AppCompatActivity {
         btnTextList.add(currentScene.second);
         btnTextList.add(currentScene.third);
         Collections.shuffle(btnTextList);
-        Button btn1,btn2,btn3;
         btn1 = findViewById(R.id.button1);
         btn2 = findViewById(R.id.button2);
         btn3 = findViewById(R.id.button3);
+        btnNxt = findViewById(R.id.buttonNxt);
+        btnNxt.setVisibility(View.INVISIBLE);
+        btn1.setVisibility(View.VISIBLE);
+        btn3.setVisibility(View.VISIBLE);
         btn1.setText(btnTextList.get(0));
         btn2.setText(btnTextList.get(1));
         btn3.setText(btnTextList.get(2));
@@ -73,27 +80,7 @@ public class LevelActivity extends AppCompatActivity {
             checkSceneNum++;
         }
          ml = ((MotionLayout)findViewById(currentScene.idML));
-         ml.setTransitionListener(new MotionLayout.TransitionListener() {
-             @Override
-             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
-
-             }
-
-             @Override
-             public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
-
-             }
-
-             @Override
-             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
-                 if(checkCorrect){
-                     correctBtnPressed(); checkCorrect=false;}
-             }
-             @Override
-             public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
-
-             }
-         });
+        flipper.setDisplayedChild(curSceneNum);
     }
 
     private void correctBtnPressed() {
@@ -122,10 +109,12 @@ public class LevelActivity extends AppCompatActivity {
     public void buttonClick(View view) throws InterruptedException {
         Button button = (Button) view;
         if(button.getText() == currentScene.correct){
-            ml.loadLayoutDescription(currentScene.correctMS);
+            //ml.loadLayoutDescription(currentScene.correctMS);
             checkCorrect = true;
             Toast.makeText(this,"Верно!",Toast.LENGTH_SHORT).show();
-            ml.setTransition(currentScene.transition);
+            ml.setTransition(R.id.tran0);
+            ml.transitionToEnd();
+            changeButtonToNext();
         }
         else if (button.getText() == currentScene.second){
             //ml.loadLayoutDescription(currentScene.secondMS);
@@ -139,6 +128,26 @@ public class LevelActivity extends AppCompatActivity {
             fails++;
             Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT).show();
         }
+        Cursor res = db.getuserstat();
+        res.moveToFirst();
         db.updatelevel(lvlNum,fails);
+        db.updateuserstat(1,lvlNum,res.getInt(2)+fails,res.getInt(3));
+    }
+
+    private void changeButtonToNext() {
+        btn1.setVisibility(View.INVISIBLE);
+        btn2.setVisibility(View.INVISIBLE);
+        btn3.setVisibility(View.INVISIBLE);
+        if(curSceneNum==scenesCount)
+            btnNxt.setText("Готово!");
+        btnNxt.setVisibility(View.VISIBLE);
+    }
+
+    public void buttonNextClick(View view) {
+        btnNxt.setVisibility(View.INVISIBLE);
+        btn1.setVisibility(View.VISIBLE);
+        btn2.setVisibility(View.VISIBLE);
+        btn3.setVisibility(View.VISIBLE);
+        correctBtnPressed();
     }
 }

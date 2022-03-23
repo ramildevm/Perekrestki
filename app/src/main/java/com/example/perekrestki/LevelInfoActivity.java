@@ -1,6 +1,7 @@
 package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -74,7 +75,7 @@ public class LevelInfoActivity extends AppCompatActivity {
         if(!LevelNum.isEmpty()) {
             txtLvl.setText("Уровень " + LevelNum);
             if (isAvaible)
-                findViewById(R.id.start_button).setVisibility(View.INVISIBLE);
+                findViewById(R.id.start_button).setVisibility(View.VISIBLE);
         }
         else {
             txtLvl.setText("Карта");
@@ -106,7 +107,7 @@ public class LevelInfoActivity extends AppCompatActivity {
         res.moveToNext();
         if(res.getInt(1)>=levelNum){
             ((TextView)findViewById(R.id.statusText)).setText("Пройдено");
-            ((TextView)findViewById(R.id.statusText)).setTextColor(0xff000000);
+            ((TextView)findViewById(R.id.statusText)).setTextColor(0xff6aa644);
         }
         else{
             ((TextView)findViewById(R.id.statusText)).setText("Не пройдено");
@@ -115,7 +116,7 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     public void startLvl(View view) {

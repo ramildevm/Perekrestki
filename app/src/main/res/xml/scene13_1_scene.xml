@@ -6,6 +6,12 @@
         <Constraint android:id="@+id/leftcar" />
     </ConstraintSet>
 
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@+id/center0"
+        app:autoTransition="none"
+        android:id="@+id/tran0"
+        app:duration="1000"/>
     <ConstraintSet android:id="@+id/center0" >
         <Constraint
             android:layout_height="54dp"
@@ -140,11 +146,6 @@
         app:constraintSetEnd="@+id/start"
         app:duration="10"
         app:autoTransition="animateToEnd" />
-    <Transition
-        app:constraintSetStart="@+id/start"
-        app:constraintSetEnd="@+id/center0"
-        android:id="@+id/tran0"
-        app:duration="1000"/>
     <Transition
         app:constraintSetStart="@+id/center0"
         app:constraintSetEnd="@+id/center"

@@ -47,10 +47,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public Boolean updateuserstat(int id, int lvlcount, int fails,int hardlvl){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("lvlount",lvlcount);
+        cv.put("lvlcount",lvlcount);
         cv.put("fails",fails);
         cv.put("hardlvl",hardlvl);
-        long result = db.update("UserStat",cv,"where id=?", new String[]{""+id});
+        long result = db.update("UserStat",cv,"id=?", new String[]{""+id});
         if (result ==-1)
             return false;
         else {
@@ -87,7 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("fails",fails);
         cv.put("scenes",res.getInt(2));
         cv.put("difficulty",res.getString(3));
-        long result = db.update("Levels",cv,"where num=?", new String[]{""+num});
+        long result = db.update("Levels",cv,"num=?", new String[]{""+num});
         if (result ==-1)
             return false;
         else
@@ -141,8 +141,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("id",id);
-        cv.put("lvlid",lvlid);
-        cv.put("sceneid",sceneid);
+        cv.put("idlvl",lvlid);
+        cv.put("idscene",sceneid);
         cv.put("priority",priority);
         long result = db.insert("LevelScene",null,cv);
         if (result ==-1)
