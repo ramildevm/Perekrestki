@@ -22,13 +22,13 @@
         android:id="@+id/textViewLvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
         android:fontFamily="@font/arima_madurai"
         android:text="Ваша статистика"
         android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/go_back_btn"
+        app:layout_constraintTop_toTopOf="@+id/go_back_btn" />
 
     <TextView
         android:id="@+id/lvlcount"
@@ -46,6 +46,7 @@
         android:id="@+id/lvlcountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="0"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="30dp"
         android:fontFamily="@font/arima_madurai"
@@ -169,13 +170,17 @@
 
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/reset_button"
         android:layout_width="208dp"
         android:layout_height="44dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/reset_stat"
+        android:textSize="20dp"
+        android:text="Сбросить"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_border_complete_y"
         android:onClick="resetStat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

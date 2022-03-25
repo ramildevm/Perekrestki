@@ -2,6 +2,7 @@ package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new DBHelper(this);
         createData();
+        if(ThemesSwitcher.backColor == null){
+            ThemesSwitcher.switchBack(ContextCompat.getDrawable(MainActivity.this,R.drawable.rounded_border_complete_y));
+        }
+        setViewTheme();
     }
+
+    private void setViewTheme() {
+        View b = findViewById(R.id.start_button);
+        b.setBackground(ThemesSwitcher.backColor);
+    }
+
     void createData(){
         if(db.getuserstat().getCount()==0)
             check = db.insertuserstat(1,0,0,0);
@@ -52,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
             db.insertlevelscene(5,2,5,2);
             db.insertlevelscene(6,2,6,3);
         }
-
-
     }
     public void goLvlPick(View view) {
         startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
@@ -62,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void goPddPage(View view) {
         startActivity(new Intent(MainActivity.this,PddPageActivity.class));
     }
-
-    public void goStatPage(View view) {
-        startActivity(new Intent(MainActivity.this,UserStatActivity.class));
+    public void goSettingsPage(View view) {
+        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
     }
 }

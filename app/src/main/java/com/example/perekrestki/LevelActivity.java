@@ -156,6 +156,7 @@ public class LevelActivity extends AppCompatActivity {
             ml.setTransition(R.id.tran0);
             ml.transitionToEnd();
             changeButtonToNext();
+            //return;
         }
         else if (button.getText() == currentScene.second){
             //ml.loadLayoutDescription(currentScene.secondMS);

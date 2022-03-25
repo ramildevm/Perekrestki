@@ -22,12 +22,13 @@
         android:id="@+id/textViewLvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:fontFamily="@font/arima_madurai"
+        android:text="hhhh"
         android:textSize="26dp"
+        app:layout_constraintBottom_toBottomOf="@+id/go_back_btn"
+        app:layout_constraintTop_toTopOf="@+id/go_back_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:transitionName="map_img"
@@ -150,7 +151,11 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/start_button"
+        android:textSize="20dp"
+        android:text="Начать"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_border_complete_y"
         android:onClick="startLvl"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

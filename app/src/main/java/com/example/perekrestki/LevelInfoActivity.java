@@ -23,6 +23,7 @@ public class LevelInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_info);
+        setViewTheme();
         db = new DBHelper(this);
         LevelNum = getIntent().getStringExtra("Number");
         Boolean isAvaible = getIntent().getBooleanExtra("isAvaible", false);
@@ -106,6 +107,13 @@ public class LevelInfoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setViewTheme() {
+        ((TextView)findViewById(R.id.difficultText)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.scenesNumText)).setTextColor(ThemesSwitcher.textColor);
+        findViewById(R.id.start_button).setBackground(ThemesSwitcher.backColor);
     }
 
     private void setData(int levelNum) {

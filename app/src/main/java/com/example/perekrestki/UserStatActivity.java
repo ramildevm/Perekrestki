@@ -18,8 +18,18 @@ public class UserStatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_stat);
+        setViewTheme();
         db = new DBHelper(this);
         setData();
+    }
+
+    private void setViewTheme() {
+        ((TextView)findViewById(R.id.lvlcountText)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.progressBar)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.hardlvlText)).setTextColor(ThemesSwitcher.textColor);
+        ((TextView)findViewById(R.id.hardlvlfailsText)).setTextColor(ThemesSwitcher.textColor);
+        findViewById(R.id.reset_button).setBackground(ThemesSwitcher.backColor);
     }
     public void setData(){
         Cursor userData = db.getuserstat();

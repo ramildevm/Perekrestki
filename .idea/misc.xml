@@ -11,14 +11,19 @@
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border2.xml" value="0.189" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_btn.xml" value="0.1635" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_complete.xml" value="0.2595" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_complete_b.xml" value="0.2075" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_complete_y.xml" value="0.2075" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_dark.xml" value="0.2595" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_light.xml" value="0.2075" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_white.xml" value="0.2075" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/drawable/rounded_border_with_stroke.xml" value="0.1" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_level.xml" value="0.264" />
-        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_level_info.xml" value="0.176" />
-        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_level_pick.xml" value="0.536" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_level_info.xml" value="0.536" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_level_pick.xml" value="0.264" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_main.xml" value="0.24333333333333335" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_map.xml" value="0.144" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_pdd_page.xml" value="0.264" />
+        <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/activity_user_stat.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/empty_layout.xml" value="0.16545532278751604" />
         <entry key="..\:/Users/ramil/AndroidStudioProjects/Perekrestki/app/src/main/res/layout/scene12_2.xml" value="0.264" />
