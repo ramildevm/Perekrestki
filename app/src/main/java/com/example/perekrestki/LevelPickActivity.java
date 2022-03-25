@@ -49,7 +49,7 @@ public class LevelPickActivity extends AppCompatActivity {
     public void goLvl(View view) {
         boolean isAvaible = false;
         String num = ((Button)view).getText().toString();
-        if(!num.isEmpty()){
+        if(!num.equals(getString(R.string.button_map))){
             int lvl = Integer.parseInt(num);
             if(lvl-1==comppletedLvlCount)
                 isAvaible = true;
@@ -57,5 +57,9 @@ public class LevelPickActivity extends AppCompatActivity {
                 isAvaible = true;
         }
         startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class).putExtra("Number",num).putExtra("isAvaible",isAvaible));
+    }
+
+    public void goLevel(View view) {
+        startActivity(new Intent(LevelPickActivity.this,LevelActivity.class).putExtra("Infinity",true));
     }
 }

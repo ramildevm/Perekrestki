@@ -20,7 +20,7 @@
     <Button
         android:id="@+id/start_button"
         android:layout_width="208dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="440dp"
         android:layout_marginEnd="50dp"
@@ -33,24 +33,25 @@
     <Button
         android:id="@+id/pdd_button"
         android:layout_width="208dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
-        android:onClick="goPddPage"
         android:background="@drawable/pdd_button"
+        android:onClick="goPddPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_button" />
+
     <Button
         android:id="@+id/stat_button"
         android:layout_width="208dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
-        android:onClick="goStatPage"
         android:background="@drawable/stat_button"
+        android:onClick="goStatPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pdd_button" />

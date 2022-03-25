@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent"
     android:background="#513215"
     tools:context=".LevelInfoActivity">
     <Button
@@ -31,7 +32,7 @@
     <ImageView
         android:transitionName="map_img"
         android:id="@+id/map_img"
-        android:layout_width="360dp"
+        android:layout_width="340dp"
         android:layout_height="270dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"

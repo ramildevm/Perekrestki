@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(db.getscenes().getCount()==0){
             db.insertscene(1,R.layout.scene13_1,R.id.tran0,R.xml.scene13_1_scene,R.xml.scene13_1_scene,R.xml.scene13_1_scene,"Красный, желтый, зеленый","Красный, зеленый,желтый","Желтый, красный, зеленый",R.id.motion_layout13_1);
-            db.insertscene(2,R.layout.scene14_1,R.id.tran0,R.xml.scene14_1_scene,R.xml.scene14_1_scene,R.xml.scene14_1_scene,"Зеленый, фиолетовый","Зеленый и фиолетовый","Фмолетовый, зеленый",R.id.motion_layout14_1);
+            db.insertscene(2,R.layout.scene14_1,R.id.tran0,R.xml.scene14_1_scene,R.xml.scene14_1_scene,R.xml.scene14_1_scene,"Зеленый, фиолетовый","Зеленый и фиолетовый","Фиолетовый, зеленый",R.id.motion_layout14_1);
             db.insertscene(3,R.layout.scene7_1,R.id.tran0,R.xml.scene7_1_scene,R.xml.scene7_1_scene,R.xml.scene7_1_scene,"Зеленый, красный","Зеленый и красный","Красный, зеленый",R.id.motion_layout7_1);
             db.insertscene(4,R.layout.scene13_2,R.id.tran0,R.xml.scene13_2_scene,0,0,"Фиолетовый, синий, красный","Фиолетовый, синий, красный","Красный, фиолетовый, синий",R.id.motion_layout13_2);
             db.insertscene(5,R.layout.scene12_2,R.id.tran0,R.xml.scene12_2_scene,0,0,"Красный, синий, зеленый","Зеленый, синий, красный","Красный, зеленый, синий",R.id.motion_layout12_2);

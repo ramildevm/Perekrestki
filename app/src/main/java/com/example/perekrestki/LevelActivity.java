@@ -31,6 +31,10 @@ public class LevelActivity extends AppCompatActivity {
     int lvlNum;
     int fails = 0;
     boolean checkCorrect;
+    //for infinity mode
+    Boolean isInfinity = false;
+    List<Scenes> sceneList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +42,31 @@ public class LevelActivity extends AppCompatActivity {
         db = new DBHelper(this);
         flipper = findViewById(R.id.sceneContainer);
         TextView lvlText = findViewById(R.id.lvlTxt);
-        lvlNum = getIntent().getIntExtra("Number",0);
-        Cursor res = db.getlevel(lvlNum);
-        res.moveToFirst();
-        fails = res.getInt(1);
-        lvlText.setText("Уровень " + lvlNum);
+        isInfinity = getIntent().getBooleanExtra("Infinity",false);
+        if(!isInfinity) {
+            lvlNum = getIntent().getIntExtra("Number", 0);
+            Cursor res = db.getlevel(lvlNum);
+            res.moveToFirst();
+            fails = res.getInt(1);
+            lvlText.setText("Уровень " + lvlNum);
+        }
+        else {
+            loadInfinityData();
+        }
         loadLayoutData();
         loadButtonsData();
     }
+
+    private void loadInfinityData() {
+        Cursor scene = db.getscenes();
+        scenesCount = scene.getCount();
+        while (scene.moveToNext()){
+            sceneList.add(new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9)));
+        }
+        Collections.shuffle(sceneList);
+        ((TextView)findViewById(R.id.lvlTxt)).setText("Бесконечный режим");
+    }
+
     private void loadButtonsData() {
         List<String> btnTextList = new ArrayList<>();
         btnTextList.add(currentScene.correct);
@@ -65,28 +86,51 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     private void loadLayoutData() {
-        Cursor lvlscene = db.getlevelscene(lvlNum);
-        scenesCount = lvlscene.getCount(); //save levels count
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        int checkSceneNum = 1;
-        while(lvlscene.moveToNext()) {
-            Cursor scene = db.getscene(lvlscene.getInt(2));
-            scene.moveToNext();
-            if(curSceneNum == checkSceneNum){ //current scene saving
-                currentScene = new Scenes(scene.getInt(0),scene.getInt(1),scene.getInt(2),scene.getInt(3),scene.getInt(4),scene.getInt(5),scene.getString(6),scene.getString(7),scene.getString(8),scene.getInt(9));
+        if(!isInfinity) {
+            Cursor lvlscene = db.getlevelscene(lvlNum);
+            scenesCount = lvlscene.getCount(); //save levels count
+            int checkSceneNum = 1;
+            while (lvlscene.moveToNext()) {
+                Cursor scene = db.getscene(lvlscene.getInt(2));
+                scene.moveToNext();
+                if (curSceneNum == checkSceneNum) { //current scene saving
+                    currentScene = new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9));
+                }
+                if (curSceneNum == 1) {//load
+                    View child = inflater.inflate(scene.getInt(1), (ViewGroup) findViewById(R.id.sceneContainer), false);
+                    flipper.addView(child);
+                }
+                checkSceneNum++;
             }
-            if(curSceneNum==1) {//load
-                View child = inflater.inflate(scene.getInt(1), (ViewGroup) findViewById(R.id.sceneContainer), false);
-                flipper.addView(child);
-            }
-            checkSceneNum++;
+            ml = ((MotionLayout) findViewById(currentScene.idML));
+            flipper.setDisplayedChild(curSceneNum);
         }
-         ml = ((MotionLayout)findViewById(currentScene.idML));
-        flipper.setDisplayedChild(curSceneNum);
+        else{
+                try {
+                    flipper.removeViewAt(1);
+                }
+                catch (Exception exception){}
+                currentScene = sceneList.get(curSceneNum-1);
+                View child = inflater.inflate(currentScene.layout, (ViewGroup) findViewById(R.id.sceneContainer), false);
+                flipper.addView(child);
+                ml = ((MotionLayout) findViewById(currentScene.idML));
+                flipper.setDisplayedChild(1);
+        }
     }
 
     private void correctBtnPressed() {
         if(curSceneNum==scenesCount){
+            if(isInfinity) {
+                Toast msg = Toast.makeText(this,"Вы дошли до конца.",Toast.LENGTH_SHORT);
+                msg.setGravity(Gravity.CENTER,0,-130);
+                msg.show();
+            }
+            else{
+                Cursor res = db.getuserstat();
+                res.moveToFirst();
+                db.updateuserstat(1, lvlNum, res.getInt(2), res.getInt(3));
+            }
             startActivity(new Intent(this,LevelInfoActivity.class));
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         }
@@ -129,10 +173,12 @@ public class LevelActivity extends AppCompatActivity {
             msg.setGravity(Gravity.CENTER,0,-130);
             msg.show();
         }
+        if(!isInfinity) {
+            db.updatelevel(lvlNum, fails);
+        }
         Cursor res = db.getuserstat();
         res.moveToFirst();
-        db.updatelevel(lvlNum,fails);
-        db.updateuserstat(1,lvlNum,res.getInt(2)+1,res.getInt(3));
+        db.updateuserstat(1, res.getInt(1), res.getInt(2) + 1, res.getInt(3));
     }
 
     private void changeButtonToNext() {

@@ -1,6 +1,8 @@
 package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.NavUtils;
 
 import android.app.ActivityOptions;
@@ -15,7 +17,6 @@ import android.widget.Toast;
 
 public class LevelInfoActivity extends AppCompatActivity {
     private String LevelNum;
-    private Boolean isAvaible=false;
     int imgId;
     DBHelper db;
     @Override
@@ -24,9 +25,19 @@ public class LevelInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level_info);
         db = new DBHelper(this);
         LevelNum = getIntent().getStringExtra("Number");
-        isAvaible = getIntent().getBooleanExtra("isAvaible",false);
-        if(!LevelNum.isEmpty())
+        Boolean isAvaible = getIntent().getBooleanExtra("isAvaible", false);
+        if(!LevelNum.equals(getString(R.string.button_map)))
             setData(Integer.parseInt(LevelNum));
+        else{
+            ConstraintLayout constraintLayout = findViewById(R.id.parent);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.connect(R.id.map_img,ConstraintSet.TOP,R.id.parent,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.BOTTOM,R.id.parent,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.START,R.id.parent,ConstraintSet.START,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.END,R.id.parent,ConstraintSet.END,0);
+            constraintSet.applyTo(constraintLayout);
+        }
 
         ImageView img = findViewById(R.id.map_img);
         switch (LevelNum){
@@ -73,7 +84,7 @@ public class LevelInfoActivity extends AppCompatActivity {
         img.setImageResource(imgId);
 
         TextView txtLvl = (TextView) findViewById(R.id.textViewLvl);
-        if(!LevelNum.isEmpty()) {
+        if(!LevelNum.equals(getString(R.string.button_map))) {
             txtLvl.setText("Уровень " + LevelNum);
             if (isAvaible)
                 findViewById(R.id.start_button).setVisibility(View.VISIBLE);
@@ -118,6 +129,7 @@ public class LevelInfoActivity extends AppCompatActivity {
 
     public void goBack(View view) {
         startActivity(new Intent(this,LevelPickActivity.class));
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     public void startLvl(View view) {
