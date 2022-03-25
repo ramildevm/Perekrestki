@@ -7,7 +7,7 @@
         android:right="3dp"
         android:top="3dp" />
     <solid
-        android:color="#3E2B17"/>
+        android:color="#33000000"/>
     <stroke
         android:width="0dp"
         android:color="#FFFFFF" />

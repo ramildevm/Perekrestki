@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -20,6 +21,10 @@ public class LevelInfoActivity extends AppCompatActivity {
     int imgId;
     DBHelper db;
     @Override
+    public void onBackPressed(){
+        NavUtils.navigateUpFromSameTask(this);
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_info);
@@ -30,13 +35,13 @@ public class LevelInfoActivity extends AppCompatActivity {
         if(!LevelNum.equals(getString(R.string.button_map)))
             setData(Integer.parseInt(LevelNum));
         else{
-            ConstraintLayout constraintLayout = findViewById(R.id.parent);
+            ConstraintLayout constraintLayout = findViewById(R.id.mainBack);
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
-            constraintSet.connect(R.id.map_img,ConstraintSet.TOP,R.id.parent,ConstraintSet.TOP,0);
-            constraintSet.connect(R.id.map_img,ConstraintSet.BOTTOM,R.id.parent,ConstraintSet.BOTTOM,0);
-            constraintSet.connect(R.id.map_img,ConstraintSet.START,R.id.parent,ConstraintSet.START,0);
-            constraintSet.connect(R.id.map_img,ConstraintSet.END,R.id.parent,ConstraintSet.END,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.TOP,R.id.mainBack,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.BOTTOM,R.id.mainBack,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.START,R.id.mainBack,ConstraintSet.START,0);
+            constraintSet.connect(R.id.map_img,ConstraintSet.END,R.id.mainBack,ConstraintSet.END,0);
             constraintSet.applyTo(constraintLayout);
         }
 
@@ -110,10 +115,11 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     private void setViewTheme() {
-        ((TextView)findViewById(R.id.difficultText)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.scenesNumText)).setTextColor(ThemesSwitcher.textColor);
-        findViewById(R.id.start_button).setBackground(ThemesSwitcher.backColor);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
+        ((TextView)findViewById(R.id.difficultText)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.scenesNumText)).setTextColor(ThemesSwitcher.mainColor);
+        findViewById(R.id.start_button).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
     }
 
     private void setData(int levelNum) {
@@ -136,8 +142,7 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        startActivity(new Intent(this,LevelPickActivity.class));
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     public void startLvl(View view) {

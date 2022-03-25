@@ -26,7 +26,8 @@ public class LevelPickActivity extends AppCompatActivity {
         checkButtons();
     }
     private void setViewTheme() {
-        findViewById(R.id.map_button).setBackground(ThemesSwitcher.backColor);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
+        findViewById(R.id.map_button).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
     }
     private void checkButtons() {
         Cursor res = db.getuserstat();
@@ -41,7 +42,7 @@ public class LevelPickActivity extends AppCompatActivity {
                     b.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_border_light));
                 }
                 else if(lvl<=comppletedLvlCount) {
-                    b.setBackground(ThemesSwitcher.backColor);
+                    b.setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
                 }
             }
         }

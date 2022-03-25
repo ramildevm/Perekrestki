@@ -6,7 +6,8 @@
         android:right="3dp"
         android:top="3dp" />
     <solid
-        android:color="#888888"/>
+        android:color="#888888"
+        />
     <stroke
         android:width="0dp"
         android:color="#FFFFFF" />

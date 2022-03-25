@@ -39,6 +39,7 @@ public class LevelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         db = new DBHelper(this);
         flipper = findViewById(R.id.sceneContainer);
         TextView lvlText = findViewById(R.id.lvlTxt);
@@ -131,7 +132,7 @@ public class LevelActivity extends AppCompatActivity {
                 res.moveToFirst();
                 db.updateuserstat(1, lvlNum, res.getInt(2), res.getInt(3));
             }
-            startActivity(new Intent(this,LevelInfoActivity.class));
+            startActivity(new Intent(LevelActivity.this,LevelInfoActivity.class).putExtra("Number",""+lvlNum).putExtra("isAvaible",true));
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         }
         else{

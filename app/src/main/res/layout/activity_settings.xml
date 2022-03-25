@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainBack"
     android:background="#513215"
     tools:context=".SettingsActivity">
     <Button
@@ -45,45 +46,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <RadioGroup
-        android:layout_width="300dp"
+    <TextView
+        android:id="@+id/changeTxt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Изменить цвет:"
+        android:textAlignment="center"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toStartOf="@id/colorBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvlTxt">
+        app:layout_constraintTop_toBottomOf="@id/lvlTxt" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Изменить цвет"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+    <Button
+        android:id="@+id/colorBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#FDB912"
+        android:onClick="changeColor"
+        app:layout_constraintBottom_toBottomOf="@+id/changeTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="30dp"
+        app:layout_constraintTop_toTopOf="@+id/changeTxt" />
+    <TextView
+        android:id="@+id/changeBackTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Изменить цвет фона:"
+        android:textAlignment="center"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toStartOf="@id/colorBackBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/changeTxt" />
 
-        <RadioButton
-            android:id="@+id/radioButtonY"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="RadioButton"
-            android:textColor="#FDB912"
-            android:textColorHighlight="#C89303"
-            android:textColorLink="#FFC800"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Светло оранжевый" />
+    <Button
+        android:id="@+id/colorBackBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#653215"
+        android:onClick="changeBackColor"
+        app:layout_constraintBottom_toBottomOf="@+id/changeBackTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="30dp"
+        app:layout_constraintTop_toTopOf="@+id/changeBackTxt" />
 
-        <RadioButton
-            android:id="@+id/radioButtonG"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RadioButton"
-            android:textColor="#00FF38 "
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Салатовый" />
-    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

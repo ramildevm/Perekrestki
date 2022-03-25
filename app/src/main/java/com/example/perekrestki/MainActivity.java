@@ -18,15 +18,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new DBHelper(this);
         createData();
-        if(ThemesSwitcher.backColor == null){
-            ThemesSwitcher.switchBack(ContextCompat.getDrawable(MainActivity.this,R.drawable.rounded_border_complete_y));
+        if(ThemesSwitcher.backColor == 0){
+            ThemesSwitcher.switchBack(R.drawable.rounded_border_complete_y);
         }
         setViewTheme();
     }
 
     private void setViewTheme() {
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         View b = findViewById(R.id.start_button);
-        b.setBackground(ThemesSwitcher.backColor);
+        b.setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
     }
 
     void createData(){

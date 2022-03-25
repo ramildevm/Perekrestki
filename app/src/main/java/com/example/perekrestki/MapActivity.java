@@ -13,6 +13,7 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         ((TextView)findViewById(R.id.textViewLvl)).setText(getIntent().getStringExtra("text"));
         ((ImageView)findViewById(R.id.map_img)).setImageResource(getIntent().getIntExtra("Number",R.drawable.level_map));
     }

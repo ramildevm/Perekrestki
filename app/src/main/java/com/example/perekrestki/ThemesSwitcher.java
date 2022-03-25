@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class ThemesSwitcher {
-    public static int textColor = Color.parseColor("#00FF38");
-    public static Drawable backColor;
-    public static void switchText(String color){
-        textColor = Color.parseColor(color);
+    public static int layoutBackColor = Color.parseColor("#513215");
+    public static int mainColor = Color.parseColor("#FDB912");
+    public static int backColor = 0;
+    public static void switchMain(String color){
+        mainColor = Color.parseColor(color);
     }
-    public static void switchBack(Drawable color){
-        backColor = color;
+    public static void switchLayoutBack(String color){
+        layoutBackColor = Color.parseColor(color);
+    }
+    public static void switchBack(int colorId){
+        backColor = colorId;
     }
 }

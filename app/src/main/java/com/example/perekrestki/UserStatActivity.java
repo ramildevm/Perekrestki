@@ -24,12 +24,13 @@ public class UserStatActivity extends AppCompatActivity {
     }
 
     private void setViewTheme() {
-        ((TextView)findViewById(R.id.lvlcountText)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.progressBar)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.hardlvlText)).setTextColor(ThemesSwitcher.textColor);
-        ((TextView)findViewById(R.id.hardlvlfailsText)).setTextColor(ThemesSwitcher.textColor);
-        findViewById(R.id.reset_button).setBackground(ThemesSwitcher.backColor);
+findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
+        ((TextView)findViewById(R.id.lvlcountText)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.progressBar)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.hardlvlText)).setTextColor(ThemesSwitcher.mainColor);
+        ((TextView)findViewById(R.id.hardlvlfailsText)).setTextColor(ThemesSwitcher.mainColor);
+        findViewById(R.id.reset_button).setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
     }
     public void setData(){
         Cursor userData = db.getuserstat();

@@ -12,6 +12,7 @@ public class PddPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdd_page);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         ((WebView)findViewById(R.id.webView)).loadUrl("file:///android_asset/pdd.html");
     }
 
