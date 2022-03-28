@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/motion_layout5_3"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
+    android:layout_height="380dp"
+    android:background="@drawable/scene5_1"
+    app:layoutDescription="@xml/scene5_3_scene">
+    <ImageView
+        android:id="@+id/img_lighth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/scene10_light_h"/>
+
+    <ImageView
+        android:id="@+id/img_lightv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/scene10_light_v" />
+
+    <ImageView
+        android:id="@+id/leftcar"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:src="@drawable/carr_left_to_forward"
+        android:translationX="-15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.599" />
+
+    <ImageView
+        android:id="@+id/rightcar"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="4dp"
+        android:rotation="180"
+        android:src="@drawable/carb_left_to_right"
+        android:translationX="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.428" />
+
+    <ImageView
+        android:id="@+id/bottomcar"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:rotation="-90"
+        android:src="@drawable/carbl_left_to_forward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@+id/center"
+        app:autoTransition="none"
+        android:id="@+id/tran0"
+        app:duration="1200">
+        <KeyFrameSet >
+            <KeyPosition
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="30"
+                app:keyPositionType="deltaRelative"
+                app:percentX=".65"
+                app:percentY=".1" />
+            <KeyAttribute
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="22"
+                android:rotation="200" />
+            <KeyAttribute
+                app:motionTarget="@+id/rightcar"
+                app:framePosition="65"
+                android:rotation="270" />
+        </KeyFrameSet>
+    </Transition>
+    <ConstraintSet android:id="@+id/center" >
+        <Constraint
+            android:layout_height="54dp"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="270"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            android:translationX="29dp"
+            android:translationY="-25dp" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end" >
+        <Constraint
+            android:layout_height="54dp"
+            android:layout_width="90dp"
+            android:id="@+id/rightcar"
+            android:rotation="270"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            android:translationX="25dp"
+            android:translationY="-25dp" />
+        <Constraint
+            android:layout_height="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="90dp"
+            android:id="@+id/leftcar"
+            android:rotation="-90"
+            android:translationX="25dp"
+            android:translationY="-25dp"
+            app:layout_constraintBottom_toTopOf="parent" />
+    </ConstraintSet>
+    <Transition
+        app:constraintSetStart="@+id/center"
+        app:constraintSetEnd="@+id/end"
+        app:duration="1600"
+        app:autoTransition="animateToEnd" >
+        <KeyFrameSet >
+            <KeyPosition
+                app:motionTarget="@+id/leftcar"
+                app:framePosition="30"
+                app:keyPositionType="deltaRelative"
+                app:percentX="0.8"
+                app:percentY="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/leftcar"
+                app:framePosition="54"
+                android:rotation="-90" />
+            <KeyAttribute
+                app:motionTarget="@+id/leftcar"
+                app:framePosition="25"
+                android:rotation="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/leftcar"
+                app:framePosition="29"
+                android:translationX="25dp" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        app:constraintSetStart="@+id/end"
+        app:constraintSetEnd="@+id/start"
+        app:duration="10"
+        app:autoTransition="animateToEnd" />
+</MotionScene>

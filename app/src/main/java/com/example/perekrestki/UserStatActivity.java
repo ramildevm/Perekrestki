@@ -37,7 +37,9 @@ findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         Cursor hardlvlres = db.getmaxlevel();
         userData.moveToFirst();
         hardlvlres.moveToFirst();
-        int lvlCount = userData.getInt(1), fails = userData.getInt(2), hardlvl = hardlvlres.getInt(0);
+        int lvlCount = userData.getInt(1),
+                fails = userData.getInt(2),
+                hardlvl = hardlvlres.getInt(0);
 
         ((TextView)findViewById(R.id.lvlcountText)).setText(""+lvlCount);
 

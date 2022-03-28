@@ -143,10 +143,11 @@ public class LevelInfoActivity extends AppCompatActivity {
 
     public void goBack(View view) {
         NavUtils.navigateUpFromSameTask(this);
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     public void startLvl(View view) {
-        if (Integer.parseInt(LevelNum) > 2){
+        if (Integer.parseInt(LevelNum) > 3){
             Toast.makeText(this, "Пока что в разработке!", Toast.LENGTH_SHORT).show();
             return;
         }

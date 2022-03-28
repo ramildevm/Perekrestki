@@ -12,7 +12,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(@Nullable Context context) {
         super(context, "Gamedata.db", null, 1);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table UserStat(id INTEGER primary key, lvlcount INTEGER, fails INTEGER, hardlvl INTEGER)");
@@ -21,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "thirdMS INTEGER, correct TEXT, second TEXT, third TEXT,idML INTEGER)");
         db.execSQL("create table LevelScene(id INTEGER primary key, idlvl INTEGER not null, idscene INTEGER not null,priority INTEGER," +
                     "foreign key (idlvl) references Levels(num),foreign key (idscene) references Scenes(id))");
+        //createData(db);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

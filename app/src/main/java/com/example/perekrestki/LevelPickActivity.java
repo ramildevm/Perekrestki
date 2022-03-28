@@ -27,7 +27,7 @@ public class LevelPickActivity extends AppCompatActivity {
     }
     private void setViewTheme() {
         findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
-        findViewById(R.id.map_button).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
+        findViewById(R.id.infinity_btn).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
     }
     private void checkButtons() {
         Cursor res = db.getuserstat();

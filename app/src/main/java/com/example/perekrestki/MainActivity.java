@@ -50,11 +50,16 @@ public class MainActivity extends AppCompatActivity {
         }
         if(db.getscenes().getCount()==0){
             db.insertscene(1,R.layout.scene13_1,R.id.tran0,R.xml.scene13_1_scene,R.xml.scene13_1_scene,R.xml.scene13_1_scene,"Красный, желтый, зеленый","Красный, зеленый,желтый","Желтый, красный, зеленый",R.id.motion_layout13_1);
-            db.insertscene(2,R.layout.scene14_1,R.id.tran0,R.xml.scene14_1_scene,R.xml.scene14_1_scene,R.xml.scene14_1_scene,"Зеленый, фиолетовый","Зеленый и фиолетовый","Фиолетовый, зеленый",R.id.motion_layout14_1);
-            db.insertscene(3,R.layout.scene7_1,R.id.tran0,R.xml.scene7_1_scene,R.xml.scene7_1_scene,R.xml.scene7_1_scene,"Зеленый, красный","Зеленый и красный","Красный, зеленый",R.id.motion_layout7_1);
-            db.insertscene(4,R.layout.scene13_2,R.id.tran0,R.xml.scene13_2_scene,0,0,"Фиолетовый, синий, красный","Фиолетовый, синий, красный","Красный, фиолетовый, синий",R.id.motion_layout13_2);
+            db.insertscene(2,R.layout.scene14_1,R.id.tran0,R.xml.scene14_1_scene,R.xml.scene14_1_scene,R.xml.scene14_1_scene,"Зеленый, фиолетовый","Зеленый И фиолетовый","Фиолетовый, зеленый",R.id.motion_layout14_1);
+            db.insertscene(3,R.layout.scene7_1,R.id.tran0,R.xml.scene7_1_scene,R.xml.scene7_1_scene,R.xml.scene7_1_scene,"Зеленый, красный","Зеленый И красный","Красный, зеленый",R.id.motion_layout7_1);
+            db.insertscene(4,R.layout.scene13_2,R.id.tran0,R.xml.scene13_2_scene,0,0,"Фиолетовый, синий, красный","Фиолетовый, красный, синий","Красный, фиолетовый, синий",R.id.motion_layout13_2);
             db.insertscene(5,R.layout.scene12_2,R.id.tran0,R.xml.scene12_2_scene,0,0,"Красный, синий, зеленый","Зеленый, синий, красный","Красный, зеленый, синий",R.id.motion_layout12_2);
-            db.insertscene(6,R.layout.scene4_2,R.id.tran0,R.xml.scene4_2_scene,0,0,"Поезд, красный и зеленый","Красный, поезд, зеленый","Зеленый, поезд, красный",R.id.motion_layout4_2);
+            db.insertscene(6,R.layout.scene4_2,R.id.tran0,R.xml.scene4_2_scene,0,0,"Поезд, красный И зеленый","Красный, поезд, зеленый","Зеленый, поезд, красный",R.id.motion_layout4_2);
+            db.insertscene(7,R.layout.scene13_3,R.id.tran0,R.xml.scene13_3_scene,0,0,"Фиолетовый, зеленый, черный","Фиолетовый, черный, зеленый","Зеленый, черный, фиолетовый",R.id.motion_layout13_3);
+            db.insertscene(8,R.layout.scene12_3,R.id.tran0,R.xml.scene12_3_scene,0,0,"Черный, желтый","Желтый, черный","Желтый И черный",R.id.motion_layout12_3);
+            db.insertscene(9,R.layout.scene9_3,R.id.tran0,R.xml.scene9_3_scene,0,0,"Желтый, черный","Черный, желтый","Желтый И черный",R.id.motion_layout9_3);
+            db.insertscene(10,R.layout.scene5_3,R.id.tran0,R.xml.scene5_3_scene,0,0,"Черный, красный И синий","Синий, черный, красный","Синий и красный, черный",R.id.motion_layout5_3);
+
         }
         if(db.getlevelscenes().getCount() ==0){
             db.insertlevelscene(1,1,1,1);
@@ -63,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             db.insertlevelscene(4,2,4,1);
             db.insertlevelscene(5,2,5,2);
             db.insertlevelscene(6,2,6,3);
+            db.insertlevelscene(7,3,7,1);
+            db.insertlevelscene(8,3,8,2);
+            db.insertlevelscene(9,3,9,3);
+            db.insertlevelscene(10,3,10,4);
         }
     }
     public void goLvlPick(View view) {

@@ -126,14 +126,15 @@ public class LevelActivity extends AppCompatActivity {
                 Toast msg = Toast.makeText(this,"Вы дошли до конца.",Toast.LENGTH_SHORT);
                 msg.setGravity(Gravity.CENTER,0,-130);
                 msg.show();
+                onBackPressed();
             }
             else{
                 Cursor res = db.getuserstat();
                 res.moveToFirst();
                 db.updateuserstat(1, lvlNum, res.getInt(2), res.getInt(3));
+                startActivity(new Intent(LevelActivity.this,LevelInfoActivity.class).putExtra("Number",""+lvlNum).putExtra("isAvaible",true));
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
-            startActivity(new Intent(LevelActivity.this,LevelInfoActivity.class).putExtra("Number",""+lvlNum).putExtra("isAvaible",true));
-            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         }
         else{
             curSceneNum++;

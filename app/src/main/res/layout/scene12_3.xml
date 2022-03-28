@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/motion_layout12_3"
+    android:layout_width="380dp"
+    android:layout_height="380dp"
+    android:background="@drawable/scene12_2_back"
+    app:layoutDescription="@xml/scene12_3_scene">
+
+    <ImageView
+        android:id="@+id/leftcar"
+        android:layout_width="90dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/cary_left_to_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
+
+    <ImageView
+        android:id="@+id/rightcar"
+        android:layout_width="90dp"
+        android:layout_height="54dp"
+        android:rotation="180"
+        android:src="@drawable/carbl_left_to_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -25,6 +25,11 @@ public class SettingsActivity extends AppCompatActivity {
         if(ThemesSwitcher.layoutBackColor==Color.parseColor("#525252"))
             findViewById(R.id.colorBackBtn).setBackgroundColor(Color.parseColor("#757575"));
     }
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(SettingsActivity.this,MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
     public void goStatPage(View view) {
         startActivity(new Intent(SettingsActivity.this,UserStatActivity.class));
     }
