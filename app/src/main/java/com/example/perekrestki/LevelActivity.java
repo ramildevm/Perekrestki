@@ -30,7 +30,6 @@ public class LevelActivity extends AppCompatActivity {
     int scenesCount;
     int lvlNum;
     int fails = 0;
-    boolean checkCorrect;
     //for infinity mode
     Boolean isInfinity = false;
     List<Scenes> sceneList = new ArrayList<>();
@@ -50,6 +49,7 @@ public class LevelActivity extends AppCompatActivity {
             res.moveToFirst();
             fails = res.getInt(1);
             lvlText.setText("Уровень " + lvlNum);
+            loadScenesData();
         }
         else {
             loadInfinityData();
@@ -67,6 +67,17 @@ public class LevelActivity extends AppCompatActivity {
         Collections.shuffle(sceneList);
         ((TextView)findViewById(R.id.lvlTxt)).setText("Бесконечный режим");
     }
+    private void loadScenesData() {
+        Cursor lvlscene = db.getlevelscene(lvlNum);
+        scenesCount = lvlscene.getCount();
+        while(lvlscene.moveToNext()) {
+            Cursor scene = db.getscene(lvlscene.getInt(2));
+            while (scene.moveToNext()) {
+                sceneList.add(new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9)));
+            }
+        }
+    }
+
 
     private void loadButtonsData() {
         List<String> btnTextList = new ArrayList<>();
@@ -88,36 +99,15 @@ public class LevelActivity extends AppCompatActivity {
 
     private void loadLayoutData() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        if(!isInfinity) {
-            Cursor lvlscene = db.getlevelscene(lvlNum);
-            scenesCount = lvlscene.getCount(); //save levels count
-            int checkSceneNum = 1;
-            while (lvlscene.moveToNext()) {
-                Cursor scene = db.getscene(lvlscene.getInt(2));
-                scene.moveToNext();
-                if (curSceneNum == checkSceneNum) { //current scene saving
-                    currentScene = new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9));
-                }
-                if (curSceneNum == 1) {//load
-                    View child = inflater.inflate(scene.getInt(1), (ViewGroup) findViewById(R.id.sceneContainer), false);
-                    flipper.addView(child);
-                }
-                checkSceneNum++;
-            }
-            ml = ((MotionLayout) findViewById(currentScene.idML));
-            flipper.setDisplayedChild(curSceneNum);
+        try {
+            flipper.removeViewAt(1);
         }
-        else{
-                try {
-                    flipper.removeViewAt(1);
-                }
-                catch (Exception exception){}
-                currentScene = sceneList.get(curSceneNum-1);
-                View child = inflater.inflate(currentScene.layout, (ViewGroup) findViewById(R.id.sceneContainer), false);
-                flipper.addView(child);
-                ml = ((MotionLayout) findViewById(currentScene.idML));
-                flipper.setDisplayedChild(1);
-        }
+        catch (Exception exception){}
+        currentScene = sceneList.get(curSceneNum-1);
+        View child = inflater.inflate(currentScene.layout, (ViewGroup) findViewById(R.id.sceneContainer), false);
+        flipper.addView(child);
+        ml = ((MotionLayout) findViewById(currentScene.idML));
+        flipper.setDisplayedChild(1);
     }
 
     private void correctBtnPressed() {
@@ -151,14 +141,13 @@ public class LevelActivity extends AppCompatActivity {
         Button button = (Button) view;
         if(button.getText() == currentScene.correct){
             //ml.loadLayoutDescription(currentScene.correctMS);
-            checkCorrect = true;
             Toast msg = Toast.makeText(this,"Верно!",Toast.LENGTH_SHORT);
             msg.setGravity(Gravity.CENTER,0,-130);
             msg.show();
             ml.setTransition(R.id.tran0);
             ml.transitionToEnd();
             changeButtonToNext();
-            //return;
+            return;
         }
         else if (button.getText() == currentScene.second){
             //ml.loadLayoutDescription(currentScene.secondMS);

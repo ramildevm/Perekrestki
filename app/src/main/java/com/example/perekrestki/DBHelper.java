@@ -15,6 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table UserStat(id INTEGER primary key, lvlcount INTEGER, fails INTEGER, hardlvl INTEGER)");
+        db.execSQL("create table UserSettings(id INTEGER primary key, maincolor TEXT, backcolor TEXT)");
         db.execSQL("create table Levels(num INTEGER primary key, fails INTEGER, scenes INTEGER,difficulty TEXT)");
         db.execSQL("create table Scenes(id INTEGER primary key, layout INTEGER, transition INTEGER, correctMS INTEGER, secondMS INTEGER, " +
                     "thirdMS INTEGER, correct TEXT, second TEXT, third TEXT,idML INTEGER)");
@@ -25,9 +26,41 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop Table if exists UserStat");
+        db.execSQL("drop Table if exists UserSettings");
         db.execSQL("drop Table if exists Levels");
         db.execSQL("drop Table if exists Scenes");
         db.execSQL("drop Table if exists LevelScene");
+    }
+    //*********************************************************************************************
+    //UserSettings
+    public Boolean insertusersettings(int id,String maincolor, String backcolor){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id",id);
+        cv.put("maincolor",maincolor);
+        cv.put("backcolor",backcolor);
+        long result = db.insert("UserSettings",null,cv);
+        if (result ==-1)
+            return false;
+        else
+            return true;
+    }
+    public Boolean updateusersettings(int id,String maincolor, String backcolor){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("maincolor",maincolor);
+        cv.put("backcolor",backcolor);
+        long result = db.update("UserSettings",cv,"id=?", new String[]{""+id});
+        if (result ==-1)
+            return false;
+        else {
+            return true;
+        }
+    }
+    public Cursor getusersettings(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from UserSettings where id=1",null);
+        return cursor;
     }
     //*********************************************************************************************
     //UserData Contex

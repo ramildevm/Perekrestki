@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,13 +21,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new DBHelper(this);
         createData();
-        if(ThemesSwitcher.backColor == 0){
-            ThemesSwitcher.switchBack(R.drawable.rounded_border_complete_y);
-        }
         setViewTheme();
     }
 
     private void setViewTheme() {
+        Cursor res = db.getusersettings();
+        res.moveToFirst();
+        ThemesSwitcher.switchLayoutBack(res.getString(2));
+        ThemesSwitcher.switchMain(res.getString(1));
+        if(ThemesSwitcher.mainColor == Color.parseColor("#FDB912"))
+            ThemesSwitcher.switchBack(R.drawable.rounded_border_complete_y);
+        else if (ThemesSwitcher.mainColor == Color.parseColor("#00FF38"))
+            ThemesSwitcher.switchBack(R.drawable.rounded_border_complete_g);
         findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         View b = findViewById(R.id.start_button);
         b.setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     void createData(){
         if(db.getuserstat().getCount()==0)
             check = db.insertuserstat(1,0,0,0);
+        if(db.getusersettings().getCount()==0)
+            check = db.insertusersettings(1,"#FDB912","#513215");
         if(db.getlevels().getCount()==0) {
             db.insertlevel(0, 0, 0, "NO_DATA");
             db.insertlevel(1, 0, 3, "Легко");
