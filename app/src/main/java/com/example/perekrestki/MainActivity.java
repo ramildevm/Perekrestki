@@ -9,21 +9,32 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity {
-    DBHelper db;
     Boolean check = false;
+    DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new DBHelper(this);
-        createData();
+        db = new DBHelper(MainActivity.this);
+        // создаем базу данных
+
+        db.create_db();
+        //createData();
         setViewTheme();
     }
-
+    public File getfileFromAsset(String s){
+        return new File("file:///android_asset/"+s);
+    }
     private void setViewTheme() {
         Cursor res = db.getusersettings();
         res.moveToFirst();

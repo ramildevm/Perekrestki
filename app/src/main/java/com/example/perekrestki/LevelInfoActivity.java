@@ -23,6 +23,7 @@ public class LevelInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         NavUtils.navigateUpFromSameTask(this);
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,39 +2,89 @@ package com.example.perekrestki;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import android.database.SQLException;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public DBHelper(@Nullable Context context) {
-        super(context, "Gamedata.db", null, 1);
+
+    private static String DB_PATH = null; // полный путь к базе данных
+    private static String DB_NAME = "Gamedb.db";
+    private static final int SCHEMA = 1; // версия базы данных
+    private Context myContext;
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, SCHEMA);
+        this.myContext = context;
+        DB_PATH = context.getFilesDir().getPath() + DB_NAME;
     }
+
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table UserStat(id INTEGER primary key, lvlcount INTEGER, fails INTEGER, hardlvl INTEGER)");
-        db.execSQL("create table UserSettings(id INTEGER primary key, maincolor TEXT, backcolor TEXT)");
-        db.execSQL("create table Levels(num INTEGER primary key, fails INTEGER, scenes INTEGER,difficulty TEXT)");
-        db.execSQL("create table Scenes(id INTEGER primary key, layout INTEGER, transition INTEGER, correctMS INTEGER, secondMS INTEGER, " +
-                    "thirdMS INTEGER, correct TEXT, second TEXT, third TEXT,idML INTEGER)");
-        db.execSQL("create table LevelScene(id INTEGER primary key, idlvl INTEGER not null, idscene INTEGER not null,priority INTEGER," +
-                    "foreign key (idlvl) references Levels(num),foreign key (idscene) references Scenes(id))");
-        //createData(db);
+    public void onCreate(SQLiteDatabase db) { }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) { }
+
+    void create_db(){
+        File file = new File(DB_PATH);
+        if (!file.exists()) {
+            //получаем локальную бд как поток
+            try {
+                InputStream is = myContext.getAssets().open(DB_NAME);
+                Log.e("2","one");
+                OutputStream fos = new FileOutputStream(DB_PATH);
+                Log.e("1","one");
+                int length = 0;
+                byte[] buffer = new byte[1024];
+
+                while ((length = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, length);
+                }
+                fos.flush();
+                fos.close();
+                is.close();
+            } catch (IOException e) {
+                Log.e("DB",e.toString());
+                e.printStackTrace();
+
+            }
+        }
     }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop Table if exists UserStat");
-        db.execSQL("drop Table if exists UserSettings");
-        db.execSQL("drop Table if exists Levels");
-        db.execSQL("drop Table if exists Scenes");
-        db.execSQL("drop Table if exists LevelScene");
+    public SQLiteDatabase open()throws SQLException {
+        return SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
+    }
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            String myPath = DB_PATH;
+            File file = new File(myPath);
+            file.setWritable(true);
+            if (file.exists() && !file.isDirectory())
+                checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        } catch (SQLiteException e) {
+
+        }
+
+        if (checkDB != null) {
+            checkDB.close();
+        }
+
+        return checkDB != null ? true : false;
     }
     //*********************************************************************************************
     //UserSettings
     public Boolean insertusersettings(int id,String maincolor, String backcolor){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("id",id);
         cv.put("maincolor",maincolor);
@@ -46,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Boolean updateusersettings(int id,String maincolor, String backcolor){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("maincolor",maincolor);
         cv.put("backcolor",backcolor);
@@ -58,14 +108,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
     public Cursor getusersettings(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from UserSettings where id=1",null);
         return cursor;
     }
     //*********************************************************************************************
     //UserData Contex
     public Boolean insertuserstat(int id,int lvlcount, int fails,int hardlvl){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("id",id);
         cv.put("lvlcount",lvlcount);
@@ -78,7 +128,7 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Boolean updateuserstat(int id, int lvlcount, int fails,int hardlvl){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("lvlcount",lvlcount);
         cv.put("fails",fails);
@@ -91,14 +141,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
     public Cursor getuserstat(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from UserStat where id=1",null);
         return cursor;
     }
     //*********************************************************************************************
     //Levels Context
     public Boolean insertlevel(int num,int fails, int scenes,String difficulty){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("num",num);
         cv.put("fails",fails);
@@ -111,7 +161,7 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Boolean updatelevel(int num,int fails){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor res = db.rawQuery("select * from Levels where num=?",new String[]{""+num});
         res.moveToNext();
 
@@ -127,18 +177,18 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Cursor getlevels(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Levels",null);
         return cursor;
     }
     public Cursor getlevel(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Levels where num=?",new String[]{""+id});
         return cursor;
     }
 
     public Cursor getmaxlevel() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Levels order by fails desc",null);
         return cursor;
     }
@@ -146,7 +196,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //Scenes Context
     public Boolean insertscene(int id,int layout, int transition,int correctMS,int secondMS,
                                int thirdMS,String correct,String second,String third,int idML){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("id",id);
         cv.put("layout",layout);
@@ -165,19 +215,19 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Cursor getscenes(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Scenes",null);
         return cursor;
     }
     public Cursor getscene(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Scenes where id=?", new String[]{"" + id});
         return cursor;
     }
     //*********************************************************************************************
     //LevelScene Contex
     public Boolean insertlevelscene(int id,int lvlid, int sceneid,int priority){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
         cv.put("id",id);
         cv.put("idlvl",lvlid);
@@ -190,12 +240,12 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
     public Cursor getlevelscenes(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from LevelScene",null);
         return cursor;
     }
     public Cursor getlevelscene(int lvlid){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from LevelScene where idlvl=? order by priority",new String[]{""+lvlid});
         return cursor;
     }
