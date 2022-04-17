@@ -41,9 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
             //получаем локальную бд как поток
             try {
                 InputStream is = myContext.getAssets().open(DB_NAME);
-                Log.e("2","one");
                 OutputStream fos = new FileOutputStream(DB_PATH);
-                Log.e("1","one");
                 int length = 0;
                 byte[] buffer = new byte[1024];
 
@@ -56,7 +54,6 @@ public class DBHelper extends SQLiteOpenHelper {
             } catch (IOException e) {
                 Log.e("DB",e.toString());
                 e.printStackTrace();
-
             }
         }
     }
