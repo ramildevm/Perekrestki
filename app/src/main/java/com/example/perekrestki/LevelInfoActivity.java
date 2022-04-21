@@ -36,6 +36,7 @@ public class LevelInfoActivity extends AppCompatActivity {
         if(!LevelNum.equals(getString(R.string.button_map)))
             setData(Integer.parseInt(LevelNum));
         else{
+            findViewById(R.id.helpIcon).setVisibility(View.INVISIBLE);
             ConstraintLayout constraintLayout = findViewById(R.id.mainBack);
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
@@ -154,4 +155,10 @@ public class LevelInfoActivity extends AppCompatActivity {
         }
         startActivity(new Intent(this,LevelActivity.class).putExtra("Number",Integer.parseInt(LevelNum)));
     }
+
+    public void openHelp(View view) {
+        CustomDialogFragment dialog = new CustomDialogFragment();
+        dialog.show(getSupportFragmentManager(), "custom");
+    }
+
 }

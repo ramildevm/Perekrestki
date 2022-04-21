@@ -29,6 +29,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/lvlTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="openHelp"
+        app:layout_constraintTop_toTopOf="@id/lvlTxt"
+        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
     <ViewFlipper
         android:id="@+id/sceneContainer"
         android:layout_width="wrap_content"

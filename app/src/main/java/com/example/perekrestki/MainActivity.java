@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -99,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
     }
 
-    public void goPddPage(View view) {
+    public void goPddPage(View view) throws InterruptedException {
         startActivity(new Intent(MainActivity.this,PddPageActivity.class));
     }
+
     public void goSettingsPage(View view) {
         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
     }

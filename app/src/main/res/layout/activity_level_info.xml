@@ -31,6 +31,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/helpIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewLvl"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="openHelp"
+        app:layout_constraintTop_toTopOf="@id/textViewLvl"
+        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
+
+    <ImageView
         android:transitionName="map_img"
         android:id="@+id/map_img"
         android:layout_width="340dp"

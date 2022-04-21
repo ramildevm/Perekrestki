@@ -3,10 +3,13 @@ package com.example.perekrestki;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +80,10 @@ public class LevelActivity extends AppCompatActivity {
             }
         }
     }
-
+    public void openHelp(View view) {
+        CustomDialogFragment dialog = new CustomDialogFragment();
+        dialog.show(getSupportFragmentManager(), "custom");
+    }
 
     private void loadButtonsData() {
         List<String> btnTextList = new ArrayList<>();
@@ -141,29 +147,20 @@ public class LevelActivity extends AppCompatActivity {
         Button button = (Button) view;
         if(button.getText() == currentScene.correct){
             //ml.loadLayoutDescription(currentScene.correctMS);
-            Toast msg = Toast.makeText(this,"Верно!",Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER,0,-130);
-            msg.show();
-            ml.setTransition(R.id.tran0);
-            ml.transitionToEnd();
-            changeButtonToNext();
+            changeButtonBack(view,R.drawable.correct_back_set,300);
             return;
         }
         else if (button.getText() == currentScene.second){
             //ml.loadLayoutDescription(currentScene.secondMS);
             //ml.setTransition(currentScene.transition);
             fails++;
-            Toast msg = Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER,0,-130);
-            msg.show();
+            changeButtonBack(view,R.drawable.uncorrect_back_set,500);
         }
         else if (button.getText() == currentScene.third){
             //ml.loadLayoutDescription(currentScene.thirdMS);
             //ml.setTransition(currentScene.transition);
             fails++;
-            Toast msg = Toast.makeText(this,"Неправильный ответ!",Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER,0,-130);
-            msg.show();
+            changeButtonBack(view,R.drawable.uncorrect_back_set,500);
         }
         if(!isInfinity) {
             db.updatelevel(lvlNum, fails);
@@ -172,8 +169,25 @@ public class LevelActivity extends AppCompatActivity {
         res.moveToFirst();
         db.updateuserstat(1, res.getInt(1), res.getInt(2) + 1, res.getInt(3));
     }
-
+private void changeButtonBack(View view, int backSetId, int duration){
+    view.setBackground(ContextCompat.getDrawable(this,backSetId));
+    TransitionDrawable transition = (TransitionDrawable) view.getBackground();
+    transition.startTransition(duration);
+    new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            if (duration == 300) {
+                transition.reverseTransition(0);
+                changeButtonToNext();
+            }
+            else
+                transition.reverseTransition(duration);
+        }
+    }, duration);
+}
     private void changeButtonToNext() {
+        ml.setTransition(R.id.tran0);
+        ml.transitionToEnd();
         btn1.setVisibility(View.INVISIBLE);
         btn2.setVisibility(View.INVISIBLE);
         btn3.setVisibility(View.INVISIBLE);

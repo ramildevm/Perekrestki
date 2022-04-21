@@ -30,19 +30,19 @@
         app:layout_constraintTop_toTopOf="@+id/go_back_btn"/>
         <HorizontalScrollView
             android:layout_marginTop="80dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-    <ImageView
-        android:transitionName="map_img"
-        android:id="@+id/map_img"
-        android:layout_width="600dp"
-        android:layout_height="600dp"
-        android:scaleType="fitStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</HorizontalScrollView>
+            <ImageView
+                android:transitionName="map_img"
+                android:id="@+id/map_img"
+                android:layout_width="300dp"
+                android:layout_height="600dp"
+                android:scaleType="fitStart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
