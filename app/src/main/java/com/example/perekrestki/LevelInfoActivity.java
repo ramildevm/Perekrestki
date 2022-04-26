@@ -149,7 +149,8 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     public void startLvl(View view) {
-        if (Integer.parseInt(LevelNum) > 3){
+        Cursor res = db.getscene(Integer.parseInt(LevelNum));
+        if (res.getCount() == 0){
             Toast.makeText(this, "Пока что в разработке!", Toast.LENGTH_SHORT).show();
             return;
         }

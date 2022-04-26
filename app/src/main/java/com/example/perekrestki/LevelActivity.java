@@ -2,6 +2,7 @@ package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -25,7 +26,7 @@ import java.util.List;
 public class LevelActivity extends AppCompatActivity {
     DBHelper db;
     ViewFlipper flipper;
-    Button btn1,btn2,btn3,btnNxt;
+    Button btn1,btn2,btn3,btnNxt,btnNxtLvl;
     MotionLayout ml;
     Scenes currentScene;
     int curSceneNum = 1;
@@ -35,7 +36,6 @@ public class LevelActivity extends AppCompatActivity {
     //for infinity mode
     Boolean isInfinity = false;
     List<Scenes> sceneList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +95,7 @@ public class LevelActivity extends AppCompatActivity {
         btn3 = findViewById(R.id.button3);
         btnNxt = findViewById(R.id.buttonNxt);
         btnNxt.setVisibility(View.INVISIBLE);
+        btnNxtLvl = findViewById(R.id.buttonNxtLvl);
         btn1.setVisibility(View.VISIBLE);
         btn3.setVisibility(View.VISIBLE);
         btn1.setText(btnTextList.get(0));
@@ -115,7 +116,7 @@ public class LevelActivity extends AppCompatActivity {
         flipper.setDisplayedChild(1);
     }
 
-    private void correctBtnPressed() {
+    private void correctBtnPressed(Boolean nxtLevelPressed) {
         if(curSceneNum==scenesCount){
             if(isInfinity) {
                 Toast msg = Toast.makeText(this,"Вы дошли до конца.",Toast.LENGTH_SHORT);
@@ -126,7 +127,15 @@ public class LevelActivity extends AppCompatActivity {
             else{
                 Cursor res = db.getuserstat();
                 res.moveToFirst();
-                db.updateuserstat(1, lvlNum, res.getInt(2), res.getInt(3));
+                db.updateuserstat(1, (lvlNum<res.getInt(1))?res.getInt(1):lvlNum, res.getInt(2), res.getInt(3));
+                res.close();
+                if(nxtLevelPressed){
+                    res = db.getscene(lvlNum+1);
+                    if (res.getCount() == 0) {
+                        startActivity(new Intent(this, LevelActivity.class).putExtra("Number", lvlNum + 1));
+                    }
+                    return;
+                }
                 startActivity(new Intent(LevelActivity.this,LevelInfoActivity.class).putExtra("Number",""+lvlNum).putExtra("isAvaible",true));
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
@@ -139,7 +148,8 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     public void goMain(View view) {
-        onBackPressed();
+        startActivity(new Intent(LevelActivity.this,LevelInfoActivity.class).putExtra("Number",""+lvlNum).putExtra("isAvaible",true));
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     public void buttonClick(View view) throws InterruptedException {
@@ -190,8 +200,10 @@ private void changeButtonBack(View view, int backSetId, int duration){
         btn1.setVisibility(View.INVISIBLE);
         btn2.setVisibility(View.INVISIBLE);
         btn3.setVisibility(View.INVISIBLE);
-        if(curSceneNum==scenesCount)
+        if(curSceneNum==scenesCount) {
             btnNxt.setText("Готово!");
+            btnNxtLvl.setVisibility(View.VISIBLE);
+        }
         btnNxt.setVisibility(View.VISIBLE);
     }
 
@@ -200,6 +212,10 @@ private void changeButtonBack(View view, int backSetId, int duration){
         btn1.setVisibility(View.VISIBLE);
         btn2.setVisibility(View.VISIBLE);
         btn3.setVisibility(View.VISIBLE);
-        correctBtnPressed();
+        correctBtnPressed(false);
+    }
+
+    public void buttonNextLevelClick(View view) {
+        correctBtnPressed(true);
     }
 }

@@ -20,6 +20,7 @@ import java.io.OutputStream;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+
     private static String DB_PATH = null; // полный путь к базе данных
     private static String DB_NAME = "Gamedb.db";
     private static final int SCHEMA = 1; // версия базы данных
@@ -27,19 +28,23 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DB_NAME, null, SCHEMA);
         this.myContext = context;
-        DB_PATH = context.getFilesDir().getPath() + DB_NAME;
+        DB_PATH = context.getFilesDir().getPath() +"/"+ DB_NAME;
     }
-
+    public static void setDbName(String dbName) {
+        DB_NAME = dbName;
+    }
+    public static void setDbPath(String dbPath) {
+        DB_PATH = dbPath;
+    }
     @Override
     public void onCreate(SQLiteDatabase db) { }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) { }
 
-    void create_db(){
+    void create_db() throws IOException{
         File file = new File(DB_PATH);
         if (!file.exists()) {
             //получаем локальную бд как поток
-            try {
                 InputStream is = myContext.getAssets().open(DB_NAME);
                 OutputStream fos = new FileOutputStream(DB_PATH);
                 int length = 0;
@@ -51,10 +56,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 fos.flush();
                 fos.close();
                 is.close();
-            } catch (IOException e) {
-                Log.e("DB",e.toString());
-                e.printStackTrace();
-            }
         }
     }
     public SQLiteDatabase open()throws SQLException {
@@ -98,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("maincolor",maincolor);
         cv.put("backcolor",backcolor);
         long result = db.update("UserSettings",cv,"id=?", new String[]{""+id});
-        if (result ==-1)
+        if (result <=0)
             return false;
         else {
             return true;

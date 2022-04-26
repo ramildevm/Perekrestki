@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
-    Boolean check = false;
     DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,11 @@ public class MainActivity extends AppCompatActivity {
         db = new DBHelper(MainActivity.this);
         // создаем базу данных
 
-        db.create_db();
+        try {
+            db.create_db();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         updateSceneData();
         setViewTheme();
     }
