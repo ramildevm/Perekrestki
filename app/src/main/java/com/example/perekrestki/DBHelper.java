@@ -211,6 +211,26 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+    public Boolean updatescene(int id,int layout, int transition,int correctMS,int secondMS,
+                               int thirdMS,String correct,String second,String third,int idML){
+        SQLiteDatabase db = open();
+        ContentValues cv = new ContentValues();
+        cv.put("id",id);
+        cv.put("layout",layout);
+        cv.put("transition",transition);
+        cv.put("correctMS",correctMS);
+        cv.put("secondMS",secondMS);
+        cv.put("thirdMS",thirdMS);
+        cv.put("correct",correct);
+        cv.put("second",second);
+        cv.put("third",third);
+        cv.put("idML",idML);;
+        long result = db.update("Scenes",cv,"id=?", new String[]{""+id});
+        if (result ==-1)
+            return false;
+        else
+            return true;
+    }
     public Cursor getscenes(){
         SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Scenes",null);
@@ -222,7 +242,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
     //*********************************************************************************************
-    //LevelScene Contex
+    //LevelScene Context
     public Boolean insertlevelscene(int id,int lvlid, int sceneid,int priority){
         SQLiteDatabase db = open();
         ContentValues cv = new ContentValues();
