@@ -1,10 +1,7 @@
 package com.example.perekrestki;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -33,8 +30,8 @@ findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         findViewById(R.id.reset_button).setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
     }
     public void setData(){
-        Cursor userData = db.getuserstat();
-        Cursor hardlvlres = db.getmaxlevel();
+        Cursor userData = db.getUserStat();
+        Cursor hardlvlres = db.getMaxLevel();
         userData.moveToFirst();
         hardlvlres.moveToFirst();
         int lvlCount = userData.getInt(1),
@@ -57,9 +54,9 @@ findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
     public void goBack(View view) { onBackPressed();
     }
     public void resetStat(View view) {
-        db.updateuserstat(1,0,0,0);
+        db.updateUserStat(1,0,0,0);
         for (int i = 1;i<13;i++){
-            db.updatelevel(i,0);
+            db.updateLevel(i,0);
         }
         setData();
     }

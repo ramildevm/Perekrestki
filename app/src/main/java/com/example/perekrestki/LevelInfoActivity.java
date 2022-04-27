@@ -125,13 +125,13 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     private void setData(int levelNum) {
-        Cursor level = db.getlevel(levelNum);
+        Cursor level = db.getLevel(levelNum);
         while(level.moveToNext()){
             ((TextView)findViewById(R.id.difficultText)).setText(level.getString(3));
             ((TextView)findViewById(R.id.scenesNumText)).setText(""+level.getInt(2));
             ((TextView)findViewById(R.id.failsText)).setText(""+level.getInt(1));
         }
-        Cursor res = db.getuserstat();
+        Cursor res = db.getUserStat();
         res.moveToNext();
         if(res.getInt(1)>=levelNum){
             ((TextView)findViewById(R.id.statusText)).setText("Пройдено");
@@ -149,7 +149,7 @@ public class LevelInfoActivity extends AppCompatActivity {
     }
 
     public void startLvl(View view) {
-        Cursor res = db.getscene(Integer.parseInt(LevelNum));
+        Cursor res = db.getScene(Integer.parseInt(LevelNum));
         if (res.getCount() == 0){
             Toast.makeText(this, "Пока что в разработке!", Toast.LENGTH_SHORT).show();
             return;

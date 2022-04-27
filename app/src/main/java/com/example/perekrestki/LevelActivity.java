@@ -2,7 +2,6 @@ package com.example.perekrestki;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -47,7 +46,7 @@ public class LevelActivity extends AppCompatActivity {
         isInfinity = getIntent().getBooleanExtra("Infinity",false);
         if(!isInfinity) {
             lvlNum = getIntent().getIntExtra("Number", 0);
-            Cursor res = db.getlevel(lvlNum);
+            Cursor res = db.getLevel(lvlNum);
             res.moveToFirst();
             fails = res.getInt(1);
             lvlText.setText("Уровень " + lvlNum);
@@ -61,7 +60,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     private void loadInfinityData() {
-        Cursor scene = db.getscenes();
+        Cursor scene = db.getScenes();
         scenesCount = scene.getCount();
         while (scene.moveToNext()){
             sceneList.add(new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9)));
@@ -70,10 +69,10 @@ public class LevelActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.lvlTxt)).setText("Бесконечный режим");
     }
     private void loadScenesData() {
-        Cursor lvlscene = db.getlevelscene(lvlNum);
+        Cursor lvlscene = db.getLevelScene(lvlNum);
         scenesCount = lvlscene.getCount();
         while(lvlscene.moveToNext()) {
-            Cursor scene = db.getscene(lvlscene.getInt(2));
+            Cursor scene = db.getScene(lvlscene.getInt(2));
             while (scene.moveToNext()) {
                 sceneList.add(new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9)));
             }
@@ -125,12 +124,12 @@ public class LevelActivity extends AppCompatActivity {
                 onBackPressed();
             }
             else{
-                Cursor res = db.getuserstat();
+                Cursor res = db.getUserStat();
                 res.moveToFirst();
-                db.updateuserstat(1, (lvlNum<res.getInt(1))?res.getInt(1):lvlNum, res.getInt(2), res.getInt(3));
+                db.updateUserStat(1, (lvlNum<res.getInt(1))?res.getInt(1):lvlNum, res.getInt(2), res.getInt(3));
                 res.close();
                 if(nxtLevelPressed){
-                    res = db.getscene(lvlNum+1);
+                    res = db.getScene(lvlNum+1);
                     if (res.getCount() == 0) {
                         startActivity(new Intent(this, LevelActivity.class).putExtra("Number", lvlNum + 1));
                     }
@@ -172,11 +171,11 @@ public class LevelActivity extends AppCompatActivity {
             changeButtonBack(view,R.drawable.uncorrect_back_set,500);
         }
         if(!isInfinity) {
-            db.updatelevel(lvlNum, fails);
+            db.updateLevel(lvlNum, fails);
         }
-        Cursor res = db.getuserstat();
+        Cursor res = db.getUserStat();
         res.moveToFirst();
-        db.updateuserstat(1, res.getInt(1), res.getInt(2) + 1, res.getInt(3));
+        db.updateUserStat(1, res.getInt(1), res.getInt(2) + 1, res.getInt(3));
     }
 private void changeButtonBack(View view, int backSetId, int duration){
     view.setBackground(ContextCompat.getDrawable(this,backSetId));

@@ -30,7 +30,7 @@ public class LevelPickActivity extends AppCompatActivity {
         findViewById(R.id.infinity_btn).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
     }
     private void checkButtons() {
-        Cursor res = db.getuserstat();
+        Cursor res = db.getUserStat();
         res.moveToFirst();
         comppletedLvlCount = res.getInt(1);
         LinearLayout ll = findViewById(R.id.linearLayout);

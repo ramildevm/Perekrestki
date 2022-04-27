@@ -1,12 +1,13 @@
 package com.example.perekrestki;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteCantOpenDatabaseException;
-import android.database.sqlite.SQLiteException;
-import android.util.Log;
+import android.os.Bundle;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -23,55 +24,169 @@ import java.io.IOException;
 public class DBHelperTest extends TestCase {
     @Test
     public void create_dbThrowsExceptionTest() {
+        String actualDbName = DBHelper.getDbName();
         try {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         DBHelper db = new DBHelper(appContext);
-        db.setDbName("GameDB.db");
+        DBHelper.setDbName("GameDB.db");
         db.create_db();
         }
         catch (IOException thrown){
             Assert.assertNotEquals("",thrown.getMessage());
         }
+        DBHelper.setDbName(actualDbName);
     }
     @Test
     public void openDbWithWrongPathTest(){
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        DBHelper db = new DBHelper(appContext);
+        DBHelper db = null;
+        String actualDbPath = DBHelper.getDbPath();
         try {
-            db.create_db();
+            db = getNewDatabase();
         } catch (IOException e) {
-            Assert.assertNotEquals("",e.getMessage());
+            Assert.fail();
+            return;
         }
-        db.setDbPath("gameDb.db");
+        DBHelper.setDbPath("gameDb.db");
         try {
             db.open();
         }
         catch (SQLException thrown){
             Assert.assertNotEquals("",thrown.getMessage());
         }
+        DBHelper.setDbPath(actualDbPath);
     }
     @Test
     public void updateUserSettingsWithWrongIdTest() {
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        DBHelper db = new DBHelper(appContext);
+        DBHelper db = null;
         try {
-            db.create_db();
+            db = getNewDatabase();
         } catch (IOException e) {
-            Assert.assertNotEquals("",e.getMessage());
+            Assert.fail(e.getMessage());
+            return;
         }
-        Boolean actual = db.updateusersettings(12,"#000","#fff");
+        Boolean actual = db.updateUserSettings(12,"#000","#fff");
         Assert.assertEquals(false,actual);
     }
     @Test
     public void updateUserStatsWithWrongIdTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Boolean actual = db.updateUserStat(23,0,0,0);
+        Assert.assertFalse(actual);
+    }
+    @Test
+    public void getScenesByIdTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Cursor res = db.getLevelScene(1);
+        Assert.assertEquals(3,res.getCount());
+    }
+    @Test
+    public void getHardesLevelTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Cursor res = db.getMaxLevel();
+        Assert.assertEquals(13,res.getCount());
+    }
+    @Test
+    public void insertExictingLevelTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Boolean res = db.insertLevel(1,0,3,"Hard");
+        Assert.assertFalse(res);
+    }
+    private DBHelper getNewDatabase() throws IOException{
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         DBHelper db = new DBHelper(appContext);
+        db.create_db();
+        return db;
+    }
+
+    @Test
+    public void insertExictingUserSettingsTest() {
+        DBHelper db = null;
         try {
-            db.create_db();
+            db = getNewDatabase();
         } catch (IOException e) {
-            Assert.assertNotEquals("",e.getMessage());
+            Assert.fail();
+            return;
         }
-        Boolean actual = db.updateuserstat(2,0,0,0);
-        Assert.assertEquals(false,actual);
+        Boolean res = db.insertUserSettings(1,"#fff","#000");
+        Assert.assertFalse(res);
+    }
+
+    @Test
+    public void insertExictingUserStatTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Boolean res = db.insertUserStat(1,0,0,0);
+        Assert.assertFalse(res);
+    }
+
+    @Test
+    public void insertExictingSceneTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Boolean res = db.insertScene(1,0,0,0,0,0,"Yes","Mo","No",0);
+        Assert.assertFalse(res);
+    }
+
+    @Test
+    public void insertExictingLevelSceneTest() {
+        DBHelper db = null;
+        try {
+            db = getNewDatabase();
+        } catch (IOException e) {
+            Assert.fail();
+            return;
+        }
+        Boolean res = db.insertLevelScene(1,1,1,0);
+        Assert.assertFalse(res);
+    }
+    //Test
+    //public void buttonCorrectPassedTest() {
+    //   Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    //   Intent intent = new Intent(appContext,LevelActivity.class).putExtra("Number",1).putExtra("isInfinity",false);
+    //   Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+    //   Bundle extras = intent.getExtras();
+    //   Instrumentation.ActivityMonitor am = instrumentation.addMonitor(LevelActivity.class.getName(), null, true);
+    //   am.waitForActivityWithTimeout(10);
+    //   instrumentation.callActivityOnCreate(new LevelActivity(),extras);
+    //   assertEquals(1, am.getHits());
+    //
+    @Test
+    public void useAppContextText() {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("com.example.perekrestki", appContext.getPackageName());
     }
 }
