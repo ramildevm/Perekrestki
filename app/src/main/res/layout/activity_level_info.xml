@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewLvl"
+        android:id="@+id/topPanelTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/arima_madurai"
@@ -35,10 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/textViewLvl"
+        app:layout_constraintBottom_toBottomOf="@id/topPanelTxt"
         app:layout_constraintEnd_toEndOf="parent"
         android:onClick="openHelp"
-        app:layout_constraintTop_toTopOf="@id/textViewLvl"
+        app:layout_constraintTop_toTopOf="@id/topPanelTxt"
         app:srcCompat="@drawable/ic_baseline_help_outline_24" />
 
     <ImageView

@@ -4,4 +4,8 @@
     <string name="button_map">Карта</string>
     <string name="pdd">Справочник</string>
     <string name="stat_string">Статистика</string>
+    <string name="level_string">Уровень </string>
+    <string name="infinity_string">Бесконечный режим</string>
+    <string name="map_string">Карта</string>
+    <string name="stat_top_string">Ваша статистика</string>
 </resources>

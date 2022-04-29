@@ -42,14 +42,14 @@ public class LevelActivity extends AppCompatActivity {
         findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         db = new DBHelper(this);
         flipper = findViewById(R.id.sceneContainer);
-        TextView lvlText = findViewById(R.id.lvlTxt);
+        TextView lvlText = findViewById(R.id.levelTxt);
         isInfinity = getIntent().getBooleanExtra("Infinity",false);
         if(!isInfinity) {
             lvlNum = getIntent().getIntExtra("Number", 0);
             Cursor res = db.getLevel(lvlNum);
             res.moveToFirst();
             fails = res.getInt(1);
-            lvlText.setText("Уровень " + lvlNum);
+            lvlText.setText(getString(R.string.level_string) + lvlNum);
             loadScenesData();
         }
         else {
@@ -66,7 +66,7 @@ public class LevelActivity extends AppCompatActivity {
             sceneList.add(new Scenes(scene.getInt(0), scene.getInt(1), scene.getInt(2), scene.getInt(3), scene.getInt(4), scene.getInt(5), scene.getString(6), scene.getString(7), scene.getString(8), scene.getInt(9)));
         }
         Collections.shuffle(sceneList);
-        ((TextView)findViewById(R.id.lvlTxt)).setText("Бесконечный режим");
+        ((TextView)findViewById(R.id.levelTxt)).setText(R.string.infinity_string);
     }
     private void loadScenesData() {
         Cursor lvlscene = db.getLevelScene(lvlNum);

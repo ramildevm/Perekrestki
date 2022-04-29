@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -173,20 +174,16 @@ public class DBHelperTest extends TestCase {
         Boolean res = db.insertLevelScene(1,1,1,0);
         Assert.assertFalse(res);
     }
-    //Test
-    //public void buttonCorrectPassedTest() {
-    //   Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-    //   Intent intent = new Intent(appContext,LevelActivity.class).putExtra("Number",1).putExtra("isInfinity",false);
-    //   Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-    //   Bundle extras = intent.getExtras();
-    //   Instrumentation.ActivityMonitor am = instrumentation.addMonitor(LevelActivity.class.getName(), null, true);
-    //   am.waitForActivityWithTimeout(10);
-    //   instrumentation.callActivityOnCreate(new LevelActivity(),extras);
-    //   assertEquals(1, am.getHits());
-    //
-    @Test
-    public void useAppContextText() {
+
+    //@Test
+    public void buttonCorrectPassedTest() {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.perekrestki", appContext.getPackageName());
+        Intent intent = new Intent(appContext, LevelActivity.class).putExtra("Number", 1).putExtra("isInfinity", false);
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        Bundle extras = intent.getExtras();
+        Instrumentation.ActivityMonitor am = instrumentation.addMonitor(LevelActivity.class.getName(), null, true);
+        am.waitForActivityWithTimeout(10);
+        instrumentation.callActivityOnCreate(new LevelActivity(), extras);
+        assertEquals(1, am.getHits());
     }
 }

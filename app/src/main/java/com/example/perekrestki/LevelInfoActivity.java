@@ -91,14 +91,14 @@ public class LevelInfoActivity extends AppCompatActivity {
         }
         img.setImageResource(imgId);
 
-        TextView txtLvl = (TextView) findViewById(R.id.textViewLvl);
+        TextView txtLvl = (TextView) findViewById(R.id.topPanelTxt);
         if(!LevelNum.equals(getString(R.string.button_map))) {
             txtLvl.setText("Уровень " + LevelNum);
             if (isAvaible)
                 findViewById(R.id.start_button).setVisibility(View.VISIBLE);
         }
         else {
-            txtLvl.setText("Карта");
+            txtLvl.setText(R.string.map_string);
             findViewById(R.id.start_button).setVisibility(View.INVISIBLE);
             findViewById(R.id.difficult).setVisibility(View.INVISIBLE);
             findViewById(R.id.fails).setVisibility(View.INVISIBLE);
@@ -161,5 +161,4 @@ public class LevelInfoActivity extends AppCompatActivity {
         CustomDialogFragment dialog = new CustomDialogFragment();
         dialog.show(getSupportFragmentManager(), "custom");
     }
-
 }
