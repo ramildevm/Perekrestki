@@ -175,11 +175,6 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return true;
     }
-    public Cursor getLevels(){
-        SQLiteDatabase db = open();
-        Cursor cursor = db.rawQuery("select * from Levels",null);
-        return cursor;
-    }
     public Cursor getLevel(int id){
         SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Levels where num=?",new String[]{""+id});
@@ -257,11 +252,6 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
-    }
-    public Cursor getLevelScenes(){
-        SQLiteDatabase db = open();
-        Cursor cursor = db.rawQuery("select * from LevelScene",null);
-        return cursor;
     }
     public Cursor getLevelScene(int lvlid){
         SQLiteDatabase db = open();

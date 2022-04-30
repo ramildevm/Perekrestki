@@ -1,27 +1,18 @@
 package com.example.perekrestki;
 
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.CoreMatchers.endsWith;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.widget.Button;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,33 +22,42 @@ import org.junit.runner.RunWith;
 public class MainActivityUITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    private MainActivity mActivity = null;
+    private Instrumentation.ActivityMonitor levelPickMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(LevelPickActivity.class.getName(),null,false);
+    private Instrumentation.ActivityMonitor mainMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(MainActivity.class.getName(),null,false);
+    private Instrumentation.ActivityMonitor pddMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(PddPageActivity.class.getName(),null,false);
+    private Instrumentation.ActivityMonitor settingsMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(SettingsActivity.class.getName(),null,false);
+
+    @Before
+    public void setUp() throws Exception{
+        mActivity = mActivityTestRule.getActivity();
+    }
     @Test
     public void mainActivitySettingsButtonClickUITest() {
-        ViewInteraction appCompatButton = onView(withId(R.id.settings_button));
-        appCompatButton.perform(click());
-        onView(withId(R.id.settingsTxt)).check(matches(isDisplayed()));
+        Assert.assertNotNull(mActivity.findViewById(R.id.settings_button));
+        mActivity.goSettingsPage(new Button(mActivity));
+        Activity settingsActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(settingsMonitor,5000);
+        Assert.assertNotNull(settingsActivity);
+        settingsActivity.finish();
     }
     @Test
     public void mainActivityPddButtonClickUITest() {
-        ViewInteraction appCompatButton = onView(withId(R.id.pdd_button));
-        appCompatButton.perform(click());
-        onView(withId(R.id.topPanelTxt)).check(matches(isDisplayed()));
+        Assert.assertNotNull(mActivity.findViewById(R.id.pdd_button));
+        mActivity.goPddPage(new Button(mActivity));
+        Activity pddActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(pddMonitor,5000);
+        Assert.assertNotNull(pddActivity);
+        pddActivity.finish();
     }
     @Test
     public void mainActivityStartButtonClickUITest() {
-        ViewInteraction appCompatButton = onView(withId(R.id.start_button));
-        appCompatButton.perform(click());
-        onView(withId(R.id.lvl1_btn)).check(matches(isDisplayed()));
+        Assert.assertNotNull(mActivity.findViewById(R.id.start_button));
+        mActivity.goLvlPick(new Button(mActivity));
+        Activity levelPickActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelPickMonitor,5000);
+        Assert.assertNotNull(levelPickActivity);
+        levelPickActivity.finish();
     }
-    @Test
-    public void mainActivityPressBackTest(){
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        Instrumentation.ActivityMonitor activityMonitor = instrumentation.addMonitor(MainActivity.class.getName(), null, false);
-        Activity activity = instrumentation.waitForMonitorWithTimeout(activityMonitor, 1000);
-        Espresso.pressBackUnconditionally();
-        if(activity != null) {
-            // do something
-            fail();
-        }
+    @After
+    public void tearDown() throws Exception{
+        mActivity = null;
     }
 }

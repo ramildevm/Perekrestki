@@ -7,10 +7,20 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.database.Cursor;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,29 +30,66 @@ import org.junit.runner.RunWith;
 public class LevelPickActivityUITest {
     @Rule
     public ActivityTestRule<LevelPickActivity> lpActivityTestRule = new ActivityTestRule<>(LevelPickActivity.class);
+
+    private LevelPickActivity lpActivity= null;
+    private Instrumentation.ActivityMonitor levelInfoMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(LevelInfoActivity.class.getName(),null,false);
+    private Instrumentation.ActivityMonitor levelMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(LevelActivity.class.getName(),null,false);
+
+    @Before
+    public void setUp() throws Exception{
+        lpActivity = lpActivityTestRule.getActivity();
+    }
+
     @Test
     public void levelPickActivityLevelButtonClickUITest() {
-        String TEXT = lpActivityTestRule.getActivity().getString(R.string.level_string)+ " 1";
-        onView(withId(R.id.lvl1_btn)).perform(click());
-        onView(withText(TEXT)).check(matches(isDisplayed()));
+        Assert.assertNotNull(lpActivity.findViewById(R.id.lvl1_btn));
+        Button button = new Button(lpActivity);
+        button.setText("1");
+        lpActivity.goLvl(button);
+        Activity levelInfoActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelInfoMonitor,5000);
+        Assert.assertNotNull(levelInfoActivity);
+        levelInfoActivity.finish();
     }
     @Test
     public void levelPickActivityCompletedLevelButtonClickUITest(){
+        //get & update data from db
         DBHelper db = new DBHelper(lpActivityTestRule.getActivity());
+        Cursor res = db.getUserStat();
+        res.moveToFirst();
         db.updateUserStat(1,1,0,0);
-        onView(withId(R.id.lvl1_btn)).perform(click());
-        onView(withId(R.id.statusText)).check(matches(withText("Пройдено")));
+        //assertion block
+        Assert.assertNotNull(lpActivity.findViewById(R.id.lvl1_btn));
+        Button button = new Button(lpActivity);
+        button.setText("1");
+        lpActivity.goLvl(button);
+        Activity levelInfoActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelInfoMonitor,5000);
+        TextView tv = levelInfoActivity.findViewById(R.id.statusText);
+        Assert.assertEquals(tv.getText(),"Пройдено");
+        //remove data
+        db.updateUserStat(res.getInt(0),res.getInt(1),res.getInt(2),res.getInt(3));
+        levelInfoActivity.finish();
     }
     @Test
     public void levelPickActivityInfinityButtonClickUITest() {
-        String TEXT = lpActivityTestRule.getActivity().getString(R.string.infinity_string);
-        onView(withId(R.id.infinity_btn)).perform(click());
-        onView(withText(TEXT)).check(matches(isDisplayed()));
+        Assert.assertNotNull(lpActivity.findViewById(R.id.map_button));
+        Button button = new Button(lpActivity);
+        button.setText("Карта");
+        lpActivity.goLvl(button);
+        Activity levelInfoActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelInfoMonitor,5000);
+        Assert.assertNotNull(levelInfoActivity);
+        levelInfoActivity.finish();
     }
     @Test
     public void levelPickActivityMapButtonClickUITest() {
-        String TEXT = lpActivityTestRule.getActivity().getString(R.string.map_string);
-        onView(withId(R.id.map_button)).perform(click());
-        onView(withText(TEXT)).check(matches(isDisplayed()));
+        Assert.assertNotNull(lpActivity.findViewById(R.id.infinity_btn));
+        Button button = new Button(lpActivity);
+        lpActivity.goLevel(button);
+        Activity infinityLevelActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelMonitor,5000);
+        Assert.assertNotNull(infinityLevelActivity);
+        infinityLevelActivity.finish();
+    }
+    @After
+    public void tearDown() throws Exception{
+        lpActivity = null;
     }
 }

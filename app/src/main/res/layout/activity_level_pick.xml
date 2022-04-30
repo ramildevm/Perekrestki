@@ -20,12 +20,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/level_pickTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/go_back_btn"
         app:layout_constraintTop_toTopOf="@+id/go_back_btn"
         android:fontFamily="@font/arima_madurai"
-        android:text="Выбор уровня"
+        android:text="@string/pick_level_string"
         android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

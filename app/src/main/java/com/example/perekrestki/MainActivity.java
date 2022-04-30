@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
     }
 
-    public void goPddPage(View view) throws InterruptedException {
+    public void goPddPage(View view) {
         startActivity(new Intent(MainActivity.this,PddPageActivity.class));
     }
 

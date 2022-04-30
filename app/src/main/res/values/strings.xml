@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Перекрестки</string>
-    <string name="number_string">Number</string>
     <string name="button_map">Карта</string>
     <string name="pdd">Справочник</string>
     <string name="stat_string">Статистика</string>
@@ -8,4 +7,6 @@
     <string name="infinity_string">Бесконечный режим</string>
     <string name="map_string">Карта</string>
     <string name="stat_top_string">Ваша статистика</string>
+    <string name="string_settings">Настройки</string>
+    <string name="pick_level_string">Выбор уровня</string>
 </resources>

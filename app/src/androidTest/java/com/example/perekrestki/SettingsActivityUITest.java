@@ -1,74 +1,98 @@
 package com.example.perekrestki;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.runner.lifecycle.Stage.RESUMED;
 
-import static com.example.perekrestki.CustomMatcher.withNotBgColor;
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.widget.Button;
 
-import static org.hamcrest.CoreMatchers.not;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.os.Bundle;
-
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Collection;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class SettingsActivityUITest {
     @Rule
-    public ActivityTestRule<SettingsActivity> mActivityTestRule = new ActivityTestRule<>(SettingsActivity.class);
+    public ActivityTestRule<SettingsActivity> sActivityTestRule = new ActivityTestRule<>(SettingsActivity.class);
+    private SettingsActivity sActivity= null;
+    private Instrumentation.ActivityMonitor mainActivityMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(MainActivity.class.getName(),null,false);
+    private Instrumentation.ActivityMonitor statMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(UserStatActivity.class.getName(),null,false);
+    //private Instrumentation.ActivityMonitor settingsMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(SettingsActivity.class.getName(),null,false);
+
+    @Before
+    public void setUp() throws Exception{
+        sActivity = sActivityTestRule.getActivity();
+    }
     @Test
     public void settingsActivityChangeBackColorClickUITest() {
-        ThemesSwitcher.updateDataFromDb(new DBHelper(mActivityTestRule.getActivity()));
-        onView(withId(R.id.colorBackBtn)).perform(click());
-        int color = ThemesSwitcher.layoutBackColor;
-        onView(withId(R.id.mainBack)).check(matches(withNotBgColor(color)));
+        ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
+        ColorDrawable buttonColor = (ColorDrawable) (sActivity.findViewById(R.id.colorBackBtn)).getBackground();
+        int noexcept = buttonColor.getColor();
+        Button button = sActivity.findViewById(R.id.colorBackBtn);
+        sActivity.changeBackColor(button);
+        ColorDrawable actualColor = (ColorDrawable) button.getBackground();
+        int actual = actualColor.getColor();
+        Assert.assertNotEquals(noexcept,actual);
     }
     @Test
     public void settingsActivityChangeColorClickUITest() {
-        ThemesSwitcher.updateDataFromDb(new DBHelper(mActivityTestRule.getActivity()));
-        onView(withId(R.id.colorBtn)).perform(click());
-        int color = ThemesSwitcher.mainColor;
-        onView(withId(R.id.colorBtn)).check(matches(withNotBgColor(color)));
-    }
-    @Test
-    public void settingsActivityStatButtonClickUITest() {
-        ViewInteraction appCompatButton = onView(withId(R.id.stat_button));
-        appCompatButton.perform(click());
-        onView(withId(R.id.topPanelTxt)).check(matches(isDisplayed()));
+        ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
+        ColorDrawable buttonColor = (ColorDrawable) (sActivity.findViewById(R.id.colorBtn)).getBackground();
+        int noexcept = buttonColor.getColor();
+        Button button = sActivity.findViewById(R.id.colorBtn);
+        sActivity.changeColor(button);
+        ColorDrawable actualColor = (ColorDrawable) button.getBackground();
+        int actual = actualColor.getColor();
+        Assert.assertNotEquals(noexcept,actual);
     }
     @Test
     public void settingsActivityBackButtonClickUITest() {
-        ViewInteraction appCompatButton = onView(withId(R.id.go_back_btn));
-        appCompatButton.perform(click());
-        onView(withId(R.id.start_button)).check(matches(isDisplayed()));
+        sActivity.goMain(new Button(sActivity));
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        Assert.assertNotNull(mainActivity);
+        mainActivity.finish();
     }
+
     @Test
     public void settingsActivityBackPressedUITest() {
-        ViewInteraction appCompat = onView(withId(R.id.start_button));
-        Espresso.pressBack();
-        appCompat.check(matches(isDisplayed()));
+        sActivity.onBackPressed();
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        Assert.assertNotNull(mainActivity);
+        mainActivity.finish();
+    }
+    @Test
+    public void settingsActivityGoStatButtonClickUITest() {
+        sActivity.goStatPage(new Button(sActivity));
+        Activity statActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(statMonitor,5000);
+        Assert.assertNotNull(statActivity);
+        statActivity.finish();
     }
     @Test
     public void settingsActivityChangeBackColorForMainActivityUITest() {
-        ThemesSwitcher.updateDataFromDb(new DBHelper(mActivityTestRule.getActivity()));
-        onView(withId(R.id.colorBackBtn)).perform(click());
-        int color = ThemesSwitcher.layoutBackColor;
-        Espresso.pressBack();
-        onView(withId(R.id.mainBack)).check(matches(withNotBgColor(color)));
+        ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
+        sActivity.changeBackColor(new Button(sActivity));
+        sActivity.onBackPressed();
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        View mainv = mainActivity.findViewById(R.id.mainBack);
+        Assert.assertEquals(ThemesSwitcher.layoutBackColor,((ColorDrawable)(mainv.getBackground())).getColor());
+    }
+    @After
+    public void tearDown() throws Exception{
+        sActivity = null;
     }
 }
