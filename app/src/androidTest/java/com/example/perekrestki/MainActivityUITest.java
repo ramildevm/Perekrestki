@@ -24,7 +24,6 @@ public class MainActivityUITest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
     private MainActivity mActivity = null;
     private Instrumentation.ActivityMonitor levelPickMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(LevelPickActivity.class.getName(),null,false);
-    private Instrumentation.ActivityMonitor mainMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(MainActivity.class.getName(),null,false);
     private Instrumentation.ActivityMonitor pddMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(PddPageActivity.class.getName(),null,false);
     private Instrumentation.ActivityMonitor settingsMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(SettingsActivity.class.getName(),null,false);
 
@@ -36,7 +35,8 @@ public class MainActivityUITest {
     public void mainActivitySettingsButtonClickUITest() {
         Assert.assertNotNull(mActivity.findViewById(R.id.settings_button));
         mActivity.goSettingsPage(new Button(mActivity));
-        Activity settingsActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(settingsMonitor,5000);
+        Activity settingsActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(settingsMonitor,5000);
         Assert.assertNotNull(settingsActivity);
         settingsActivity.finish();
     }
@@ -44,7 +44,8 @@ public class MainActivityUITest {
     public void mainActivityPddButtonClickUITest() {
         Assert.assertNotNull(mActivity.findViewById(R.id.pdd_button));
         mActivity.goPddPage(new Button(mActivity));
-        Activity pddActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(pddMonitor,5000);
+        Activity pddActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(pddMonitor,5000);
         Assert.assertNotNull(pddActivity);
         pddActivity.finish();
     }
@@ -52,7 +53,8 @@ public class MainActivityUITest {
     public void mainActivityStartButtonClickUITest() {
         Assert.assertNotNull(mActivity.findViewById(R.id.start_button));
         mActivity.goLvlPick(new Button(mActivity));
-        Activity levelPickActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(levelPickMonitor,5000);
+        Activity levelPickActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(levelPickMonitor,5000);
         Assert.assertNotNull(levelPickActivity);
         levelPickActivity.finish();
     }

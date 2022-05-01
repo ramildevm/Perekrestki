@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import junit.framework.TestCase;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,11 +24,15 @@ import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
 public class DBHelperTest extends TestCase {
+    Context appContext;
+    @Before
+    public void setUp() throws Exception{
+        appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
     @Test
     public void create_dbThrowsExceptionTest() {
         String actualDbName = DBHelper.getDbName();
         try {
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         DBHelper db = new DBHelper(appContext);
         DBHelper.setDbName("GameDB.db");
         db.create_db();
@@ -173,17 +178,5 @@ public class DBHelperTest extends TestCase {
         }
         Boolean res = db.insertLevelScene(1,1,1,0);
         Assert.assertFalse(res);
-    }
-
-    //@Test
-    public void buttonCorrectPassedTest() {
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Intent intent = new Intent(appContext, LevelActivity.class).putExtra("Number", 1).putExtra("isInfinity", false);
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        Bundle extras = intent.getExtras();
-        Instrumentation.ActivityMonitor am = instrumentation.addMonitor(LevelActivity.class.getName(), null, true);
-        am.waitForActivityWithTimeout(10);
-        instrumentation.callActivityOnCreate(new LevelActivity(), extras);
-        assertEquals(1, am.getHits());
     }
 }

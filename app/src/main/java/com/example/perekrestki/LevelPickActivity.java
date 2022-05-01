@@ -24,15 +24,17 @@ public class LevelPickActivity extends AppCompatActivity {
         db = new DBHelper(this);
         checkButtons();
     }
-    private void setViewTheme() {
+    public void setViewTheme() {
         findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
-        findViewById(R.id.infinity_btn).setBackground(ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
+        findViewById(R.id.infinity_btn).setBackground(
+                ContextCompat.getDrawable(this,ThemesSwitcher.backColor));
     }
-    private void checkButtons() {
+    public int checkButtons() {
         Cursor res = db.getUserStat();
         res.moveToFirst();
         comppletedLvlCount = res.getInt(1);
         LinearLayout ll = findViewById(R.id.linearLayout);
+        int completedButtonsCount = 0;
         for(int i = 0;i<4;i++) {
             for(int j = 0;j<3;j++) {
                 Button b = (Button) ((LinearLayout) ll.getChildAt(i)).getChildAt(j);
@@ -42,9 +44,11 @@ public class LevelPickActivity extends AppCompatActivity {
                 }
                 else if(lvl<=comppletedLvlCount) {
                     b.setBackground(getResources().getDrawable(ThemesSwitcher.backColor));
+                    completedButtonsCount++;
                 }
             }
         }
+        return completedButtonsCount;
     }
     public void goMain(View view) {
         NavUtils.navigateUpFromSameTask(this);
@@ -60,9 +64,9 @@ public class LevelPickActivity extends AppCompatActivity {
             else if(lvl<=comppletedLvlCount & lvl!=0)
                 isAvaible = true;
         }
-        startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class).putExtra("Number",num).putExtra("isAvaible",isAvaible));
+        startActivity(new Intent(LevelPickActivity.this,LevelInfoActivity.class)
+                .putExtra("Number",num).putExtra("isAvaible",isAvaible));
     }
-
     public void goLevel(View view) {
         startActivity(new Intent(LevelPickActivity.this,LevelActivity.class).putExtra("Infinity",true));
     }

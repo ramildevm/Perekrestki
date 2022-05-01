@@ -21,7 +21,7 @@ public class UserStatActivity extends AppCompatActivity {
     }
 
     private void setViewTheme() {
-findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
+        findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         ((TextView)findViewById(R.id.lvlcountText)).setTextColor(ThemesSwitcher.mainColor);
         ((TextView)findViewById(R.id.progressBar)).setTextColor(ThemesSwitcher.mainColor);
         ((TextView)findViewById(R.id.failsText)).setTextColor(ThemesSwitcher.mainColor);
@@ -49,7 +49,6 @@ findViewById(R.id.mainBack).setBackgroundColor(ThemesSwitcher.layoutBackColor);
         ((TextView)findViewById(R.id.failsText)).setText(""+fails);
         ((TextView)findViewById(R.id.hardlvlText)).setText(""+hardlvl);
         ((TextView)findViewById(R.id.hardlvlfailsText)).setText(""+hardlvlres.getInt(1));
-
     }
     public void goBack(View view) { onBackPressed();
     }

@@ -5,6 +5,7 @@ import static androidx.test.runner.lifecycle.Stage.RESUMED;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class SettingsActivityUITest {
     @Rule
     public ActivityTestRule<SettingsActivity> sActivityTestRule = new ActivityTestRule<>(SettingsActivity.class);
     private SettingsActivity sActivity= null;
+    private Cursor initialSettingsState;
     private Instrumentation.ActivityMonitor mainActivityMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(MainActivity.class.getName(),null,false);
     private Instrumentation.ActivityMonitor statMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(UserStatActivity.class.getName(),null,false);
     //private Instrumentation.ActivityMonitor settingsMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(SettingsActivity.class.getName(),null,false);
@@ -37,11 +39,13 @@ public class SettingsActivityUITest {
     @Before
     public void setUp() throws Exception{
         sActivity = sActivityTestRule.getActivity();
+        initialSettingsState = new DBHelper(sActivity).getUserSettings();
     }
     @Test
     public void settingsActivityChangeBackColorClickUITest() {
         ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
-        ColorDrawable buttonColor = (ColorDrawable) (sActivity.findViewById(R.id.colorBackBtn)).getBackground();
+        ColorDrawable buttonColor = (ColorDrawable)
+                (sActivity.findViewById(R.id.colorBackBtn)).getBackground();
         int noexcept = buttonColor.getColor();
         Button button = sActivity.findViewById(R.id.colorBackBtn);
         sActivity.changeBackColor(button);
@@ -52,7 +56,8 @@ public class SettingsActivityUITest {
     @Test
     public void settingsActivityChangeColorClickUITest() {
         ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
-        ColorDrawable buttonColor = (ColorDrawable) (sActivity.findViewById(R.id.colorBtn)).getBackground();
+        ColorDrawable buttonColor = (ColorDrawable)
+                (sActivity.findViewById(R.id.colorBtn)).getBackground();
         int noexcept = buttonColor.getColor();
         Button button = sActivity.findViewById(R.id.colorBtn);
         sActivity.changeColor(button);
@@ -60,10 +65,12 @@ public class SettingsActivityUITest {
         int actual = actualColor.getColor();
         Assert.assertNotEquals(noexcept,actual);
     }
+
     @Test
     public void settingsActivityBackButtonClickUITest() {
         sActivity.goMain(new Button(sActivity));
-        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(mainActivityMonitor,5000);
         Assert.assertNotNull(mainActivity);
         mainActivity.finish();
     }
@@ -71,14 +78,16 @@ public class SettingsActivityUITest {
     @Test
     public void settingsActivityBackPressedUITest() {
         sActivity.onBackPressed();
-        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(mainActivityMonitor,5000);
         Assert.assertNotNull(mainActivity);
         mainActivity.finish();
     }
     @Test
     public void settingsActivityGoStatButtonClickUITest() {
         sActivity.goStatPage(new Button(sActivity));
-        Activity statActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(statMonitor,5000);
+        Activity statActivity = InstrumentationRegistry.getInstrumentation().
+                waitForMonitorWithTimeout(statMonitor,5000);
         Assert.assertNotNull(statActivity);
         statActivity.finish();
     }
@@ -87,12 +96,20 @@ public class SettingsActivityUITest {
         ThemesSwitcher.updateDataFromDb(new DBHelper(sActivity));
         sActivity.changeBackColor(new Button(sActivity));
         sActivity.onBackPressed();
-        Activity mainActivity = InstrumentationRegistry.getInstrumentation().waitForMonitorWithTimeout(mainActivityMonitor,5000);
+        Activity mainActivity = InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(mainActivityMonitor,5000);
         View mainv = mainActivity.findViewById(R.id.mainBack);
         Assert.assertEquals(ThemesSwitcher.layoutBackColor,((ColorDrawable)(mainv.getBackground())).getColor());
     }
     @After
     public void tearDown() throws Exception{
+        initialSettingsState.moveToFirst();
+        DBHelper _db = new DBHelper(sActivity);
+        _db.updateUserSettings(initialSettingsState.getInt(0),
+                initialSettingsState.getString(1),
+                initialSettingsState.getString(2));
+        ThemesSwitcher.updateDataFromDb(_db);
+        _db.close();
         sActivity = null;
     }
 }

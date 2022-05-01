@@ -51,14 +51,17 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
     public void goLvlPick(View view) {
-        startActivity(new Intent(MainActivity.this,LevelPickActivity.class));
+        startActivity(new Intent(MainActivity.this,
+                LevelPickActivity.class));
     }
 
     public void goPddPage(View view) {
-        startActivity(new Intent(MainActivity.this,PddPageActivity.class));
+        startActivity(new Intent(MainActivity.this,
+                PddPageActivity.class));
     }
 
     public void goSettingsPage(View view) {
-        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+        startActivity(new Intent(MainActivity.this,
+                SettingsActivity.class));
     }
 }

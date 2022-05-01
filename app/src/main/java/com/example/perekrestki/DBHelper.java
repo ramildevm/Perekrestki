@@ -45,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) { }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) { }
+
     void create_db() throws IOException{
         File file = new File(DB_PATH);
         if (!file.exists()) {
@@ -180,7 +181,6 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select * from Levels where num=?",new String[]{""+id});
         return cursor;
     }
-
     public Cursor getMaxLevel() {
         SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery("select * from Levels order by fails desc",null);
@@ -255,7 +255,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Cursor getLevelScene(int lvlid){
         SQLiteDatabase db = open();
-        Cursor cursor = db.rawQuery("select * from LevelScene where idlvl=? order by priority",new String[]{""+lvlid});
+        Cursor cursor = db.rawQuery("select * from LevelScene where idlvl=? order by priority",
+                new String[]{""+lvlid});
         return cursor;
     }
 }
